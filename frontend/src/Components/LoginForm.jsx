@@ -5,7 +5,7 @@ function LoginForm() {
   const formik = useFormik({
     initialValues: { name: '', password: '' },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      console.log(JSON.stringify(values, null, 2));
     },
   });
   return (
