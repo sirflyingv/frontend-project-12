@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Other() {
+function NotFound() {
   const content = 'Are you lost?';
   return (
     <h1>{content}</h1>
   );
 }
 
-export default Other;
+export default NotFound;

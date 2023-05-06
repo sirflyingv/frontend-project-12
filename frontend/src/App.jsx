@@ -2,16 +2,16 @@ import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './Components/MainPage';
-import Login from './Components/Login';
-import Other from './Components/other';
+import LoginForm from './Components/LoginForm';
+import NotFound from './Components/NotFound';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<Other />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
