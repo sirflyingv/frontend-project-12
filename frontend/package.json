@@ -2,13 +2,16 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5001",
+  "proxy": "http://192.168.199.5:5001",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.4.0",
+    "bootstrap": "^5.2.3",
     "formik": "^2.2.9",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
@@ -39,8 +42,9 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^8.39.0",
+    "eslint": "^8.40.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-functional": "^5.0.8",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",

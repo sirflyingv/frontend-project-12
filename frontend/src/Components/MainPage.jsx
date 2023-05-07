@@ -1,10 +1,10 @@
 import React from 'react';
 
-function MainPage() {
-  const content = 'KEK';
+const MainPage = () => {
+  const content = 'Here will be chat';
   return (
     <h1>{content}</h1>
   );
-}
+};
 
 export default MainPage;

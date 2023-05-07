@@ -5,6 +5,7 @@ import App from './App';
 // import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// eslint-disable-next-line functional/no-expression-statements
 root.render(
   <React.StrictMode>
     <App />
