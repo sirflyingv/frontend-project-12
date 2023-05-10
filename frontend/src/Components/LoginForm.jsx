@@ -36,7 +36,8 @@ const LoginForm = () => {
         setAuthFailed(true);
         console.log('op!', e);
       });
-      localStorage.setItem('userId', JSON.stringify(res.data));
+      const { token } = res.data;
+      localStorage.setItem('authToken', JSON.stringify({ token }));
       auth.logIn();
       setAuthFailed(false);
       navigate('/');
