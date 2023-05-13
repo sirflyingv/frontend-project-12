@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable functional/no-expression-statements */
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter, Routes, Route,
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import MainPage from './Components/MainPage';
@@ -16,8 +17,9 @@ const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const logIn = () => setLoggedIn(true);
+
   const logOut = () => {
-    localStorage.removeItem('userId');
+    localStorage.removeItem('authToken');
     setLoggedIn(false);
   };
 

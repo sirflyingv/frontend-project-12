@@ -4,7 +4,10 @@ import './index.css';
 import App from './App';
 // import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const rootEl = document.getElementById('root');
+
+const root = ReactDOM.createRoot(rootEl);
+
 // eslint-disable-next-line functional/no-expression-statements
 root.render(
   <React.StrictMode>

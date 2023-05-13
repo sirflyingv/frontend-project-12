@@ -4,8 +4,7 @@ import axios from 'axios';
 
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 // import routes from '../routes.js';
-
-export const fetchData = createAsyncThunk(
+const fetchData = createAsyncThunk(
   'data/fetchData',
   async (token) => {
     const response = await axios.get('/api/v1/data', {
@@ -15,6 +14,7 @@ export const fetchData = createAsyncThunk(
         'Authorization': `Bearer ${token}`,
       },
     });
+    console.log(response.data);
     return response.data;
   },
 );

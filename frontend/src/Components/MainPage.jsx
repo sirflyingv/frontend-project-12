@@ -1,34 +1,55 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable functional/no-conditional-statements */
 /* eslint-disable functional/no-expression-statements */
 
 import React, { useEffect /* useState */ } from 'react';
+import {
+  Container, Row, Nav, Button, /* , Col, */
+} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { /* useSelector, */ useDispatch } from 'react-redux';
+import ChannelsPanel from './ChannelsPanel';
+import ActiveChannel from './ActiveChannel';
 import { useAuth } from '../Contexts';
 
-import { fetchData, selectors } from '../redux/dataSlice';
+import fetchData from '../redux/fetchData';
 
 const MainPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const data = useSelector(selectors.selectAll);
+  const { token } = JSON.parse(localStorage.getItem('authToken'));
 
   useEffect(() => {
-    const { localStorage } = window;
-    const authTokenItem = JSON.parse(localStorage.getItem('authToken'));
-    if (!authTokenItem) {
-      navigate('/login');
-    } else {
-      auth.logIn();
-      dispatch(fetchData(authTokenItem.token));
-    }
-  }, [auth, dispatch, navigate]);
+    dispatch(fetchData(token));
+  }, [dispatch, token]);
+
+  const handleLogOutButton = () => {
+    localStorage.removeItem('authToken');
+    navigate('/login');
+    auth.logOut();
+  };
 
   return (
-    <h1>{JSON.stringify(data)}</h1>
+    <div className="d-flex flex-column h-100">
+      <Nav variant="pills" className="shadow-sm navbar navbar-expand-lg navbar-light bg-white" defaultActiveKey="/home">
+        <Container>
+          <a href="/" className="navbar-brand">Hexlet Chat</a>
+          <Button onClick={handleLogOutButton}>Выйти</Button>
+        </Container>
+      </Nav>
+      <Container className="h-100 my-4 overflow-hidden rounded shadow">
+        <Row className="row h-100 bg-white flex-md-row">
+          <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
+            <ChannelsPanel />
+          </div>
+          <div className="col p-0 h-100">
+            <ActiveChannel />
+          </div>
+        </Row>
+      </Container>
+    </div>
+
   );
 };
 
