@@ -1,6 +1,5 @@
 /* eslint-disable functional/no-conditional-statements */
 /* eslint-disable functional/no-expression-statements */
-
 import React, { useEffect /* useState */ } from 'react';
 import {
   Container, Row, Nav, Button, /* , Col, */
@@ -18,14 +17,18 @@ const MainPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { token } = JSON.parse(localStorage.getItem('authToken'));
-
   useEffect(() => {
-    dispatch(fetchData(token));
-  }, [dispatch, token]);
+    try {
+      const authData = JSON.parse(localStorage.getItem('authData'));
+      const { token } = authData;
+      dispatch(fetchData(token));
+    } catch (error) {
+      navigate('/login');
+    }
+  }, [dispatch, navigate]);
 
   const handleLogOutButton = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('authData');
     navigate('/login');
     auth.logOut();
   };

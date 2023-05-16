@@ -1,3 +1,4 @@
+/* eslint-disable functional/no-conditional-statements */
 /* eslint-disable functional/no-expression-statements */
 import React, { /* useEffect, */ useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +8,7 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 // import cn from 'classnames';
-import axios from 'axios';
+// import axios from 'axios';
 import { useAuth } from '../Contexts';
 
 const LoginForm = () => {
@@ -25,21 +26,12 @@ const LoginForm = () => {
         .min(4, 'Must be 6 characters or more')
         .required('Required'),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (authData) => {
       try {
-        const res = await axios.post('/api/v1/login', values, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const { token } = res.data;
-        localStorage.setItem('authToken', JSON.stringify({ token }));
-        auth.logIn();
-        setAuthFailed(false);
+        await auth.logIn(authData);
         navigate('/');
-      } catch (err) {
+      } catch (error) {
         setAuthFailed(true);
-        console.log('op!', err);
       }
     },
   });

@@ -1,7 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+/* eslint-disable functional/no-expression-statements */
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
-import trySocket from '../ChatSocketAPI';
+import { actions } from '../State/messagesSlice';
+import socket from '../ChatSocketAPI';
 
 const ActiveChannel = () => {
   const channels = useSelector((state) => state.channels);
@@ -10,16 +12,27 @@ const ActiveChannel = () => {
   const currentChannel = channels.find((channel) => channel.id === currentChannelId);
   const currentMessages = messages.filter((message) => message.channelId === currentChannelId);
 
+  const { username } = JSON.parse(localStorage.getItem('authData')) || 'f';
+
   const formik = useFormik({
     initialValues: { message: '' },
     onSubmit: ({ message }) => {
       const messageData = {
-        body: message, channelId: currentChannelId, username: 'Doooorian',
+        body: message, channelId: currentChannelId, username,
       };
-      // eslint-disable-next-line functional/no-expression-statements
-      trySocket(messageData);
+      socket.emit('newMessage', messageData);
+      formik.values.message = '';
     },
   });
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // socket.on('connect', () => { console.log('connected'); });
+    // socket.on('disconnect', () => { console.log('disconnected'); });
+    socket.on('newMessage', (message) => {
+      dispatch(actions.addMessage(message));
+    });
+  }, [dispatch]);
 
   return (
     <div className="col p-0 h-100">
