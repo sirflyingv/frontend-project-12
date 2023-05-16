@@ -9,6 +9,7 @@ import { /* useSelector, */ useDispatch } from 'react-redux';
 import ChannelsPanel from './ChannelsPanel';
 import ActiveChannel from './ActiveChannel';
 import { useAuth } from '../Contexts';
+import socket from '../ChatSocketAPI';
 
 import fetchData from '../State/fetchData';
 
@@ -22,6 +23,7 @@ const MainPage = () => {
       const authData = JSON.parse(localStorage.getItem('authData'));
       const { token } = authData;
       dispatch(fetchData(token));
+      socket.connect();
     } catch (error) {
       navigate('/login');
     }

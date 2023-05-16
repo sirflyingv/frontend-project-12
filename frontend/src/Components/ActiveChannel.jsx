@@ -11,7 +11,6 @@ const ActiveChannel = () => {
   const currentChannelId = useSelector((state) => state.currentChannelId);
   const currentChannel = channels.find((channel) => channel.id === currentChannelId);
   const currentMessages = messages.filter((message) => message.channelId === currentChannelId);
-
   const { username } = JSON.parse(localStorage.getItem('authData')) || 'f';
 
   const formik = useFormik({
@@ -20,18 +19,25 @@ const ActiveChannel = () => {
       const messageData = {
         body: message, channelId: currentChannelId, username,
       };
-      socket.emit('newMessage', messageData);
+      socket.emit('newMessage', messageData, (response) => {
+        console.log(response);
+      });
       formik.values.message = '';
     },
   });
 
   const dispatch = useDispatch();
   useEffect(() => {
-    // socket.on('connect', () => { console.log('connected'); });
-    // socket.on('disconnect', () => { console.log('disconnected'); });
+    socket.on('connect', () => { console.log('connected'); });
+    socket.on('disconnect', () => { console.log('disconnected'); });
     socket.on('newMessage', (message) => {
       dispatch(actions.addMessage(message));
     });
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('newMessage');
+    };
   }, [dispatch]);
 
   return (
