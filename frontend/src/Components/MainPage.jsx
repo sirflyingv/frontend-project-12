@@ -11,7 +11,7 @@ import ChannelsPanel from './ChannelsPanel';
 import ActiveChannel from './ActiveChannel';
 import { useAuth } from '../Contexts';
 
-import fetchData from '../redux/fetchData';
+import fetchData from '../State/fetchData';
 
 const MainPage = () => {
   const auth = useAuth();
@@ -40,12 +40,8 @@ const MainPage = () => {
       </Nav>
       <Container className="h-100 my-4 overflow-hidden rounded shadow">
         <Row className="row h-100 bg-white flex-md-row">
-          <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
-            <ChannelsPanel />
-          </div>
-          <div className="col p-0 h-100">
-            <ActiveChannel />
-          </div>
+          <ChannelsPanel />
+          <ActiveChannel />
         </Row>
       </Container>
     </div>

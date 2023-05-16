@@ -5,7 +5,6 @@ import {
   Button, Form, Container, Alert,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import * as yup from 'yup';
 // import cn from 'classnames';
 import axios from 'axios';

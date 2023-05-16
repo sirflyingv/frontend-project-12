@@ -2,25 +2,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import fetchData from './fetchData';
 
-const initialState = {
-  channels: [],
-};
+const initialState = [{ id: 1, name: 'general', removable: false }];
 
 const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-    addChannel: (state, { payload }) => ({ channels: [...state.channels, payload] }),
+    addChannel: (state, { payload }) => ([...state, payload]),
   },
   extraReducers: (builder) => {
     builder
     //   .addCase(fetchData.pending, () => {
     //     console.log('Pending first data loading...');
     //   })
-      .addCase(fetchData.fulfilled, (state, action) => {
-        console.log('action', action.payload);
-        return { channels: action.payload.channels };
-      });
+      .addCase(fetchData.fulfilled, (state, action) => (action.payload.channels));
   },
 });
 

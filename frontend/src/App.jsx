@@ -6,7 +6,7 @@ import {
   BrowserRouter, Routes, Route,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import store from './State/store';
 import MainPage from './Components/MainPage';
 import LoginForm from './Components/LoginForm';
 import NotFound from './Components/NotFound';
