@@ -8,7 +8,7 @@ const currentChannelIdSlice = createSlice({
   name: 'currentChannelId',
   initialState,
   reducers: {
-    changeCurrentChannelId: (state, { payload }) => (payload.currentChannelId),
+    changeCurrentChannelId: (state, { payload }) => payload,
   },
   extraReducers: (builder) => {
     builder
