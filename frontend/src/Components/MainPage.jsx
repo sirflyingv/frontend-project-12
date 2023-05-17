@@ -5,9 +5,11 @@ import {
   Container, Row, Nav, Button, /* , Col, */
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { /* useSelector, */ useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ChannelsPanel from './ChannelsPanel';
 import ActiveChannel from './ActiveChannel';
+import Modal from './Modal';
+import CreateNewChannel from './modal/createNewChannel';
 import { useAuth } from '../Contexts';
 import socket from '../ChatSocketAPI';
 
@@ -29,28 +31,41 @@ const MainPage = () => {
     }
   }, [dispatch, navigate]);
 
+  useEffect(() => {
+    socket.on('connect', () => { console.log('connected'); });
+    socket.on('disconnect', () => { console.log('disconnected'); });
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+    };
+  }, []);
+
   const handleLogOutButton = () => {
     localStorage.removeItem('authData');
     navigate('/login');
     auth.logOut();
   };
 
-  return (
-    <div className="d-flex flex-column h-100">
-      <Nav variant="pills" className="shadow-sm navbar navbar-expand-lg navbar-light bg-white" defaultActiveKey="/home">
-        <Container>
-          <a href="/" className="navbar-brand">Hexlet Chat</a>
-          <Button onClick={handleLogOutButton}>Выйти</Button>
-        </Container>
-      </Nav>
-      <Container className="h-100 my-4 overflow-hidden rounded shadow">
-        <Row className="row h-100 bg-white flex-md-row">
-          <ChannelsPanel />
-          <ActiveChannel />
-        </Row>
-      </Container>
-    </div>
+  const modalOpened = useSelector((state) => state.modalOpened.opened);
 
+  return (
+    <>
+      <div className="d-flex flex-column h-100">
+        <Nav variant="pills" className="shadow-sm navbar navbar-expand-lg navbar-light bg-white" defaultActiveKey="/home">
+          <Container>
+            <a href="/" className="navbar-brand">Hexlet Chat</a>
+            <Button onClick={handleLogOutButton}>Выйти</Button>
+          </Container>
+        </Nav>
+        <Container className="h-100 my-4 overflow-hidden rounded shadow">
+          <Row className="row h-100 bg-white flex-md-row">
+            <ChannelsPanel />
+            <ActiveChannel />
+          </Row>
+        </Container>
+      </div>
+      {modalOpened ? <Modal><CreateNewChannel /></Modal> : null}
+    </>
   );
 };
 
