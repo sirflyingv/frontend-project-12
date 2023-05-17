@@ -53,13 +53,15 @@ const AuthProvider = ({ children }) => {
 const App = () => (
   <Provider store={store}>
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <div className="d-flex flex-column h-100">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
     </AuthProvider>
   </Provider>
 );

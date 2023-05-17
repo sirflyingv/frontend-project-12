@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable functional/no-expression-statements */
 import React, { useEffect } from 'react';
 import {
-  Button,
+  Button, ButtonGroup, Dropdown,
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../State/currentChannelIdSlice';
@@ -34,16 +35,30 @@ const ChannelsList = () => {
     <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
       {channels.map((channel) => (
         <li key={channel.id} className="nav-item w-100">
-          <Button
-            id={channel.id}
-            onClick={() => handleChannelClick(channel.id)}
-            type="button"
-            className="w-100 rounded-0 text-start"
-            variant={channel.id === currentChannelId ? 'secondary' : 'light'}
-          >
-            <span className="me-1">#</span>
-            {channel.name}
-          </Button>
+          <Dropdown className="w-100 rounded-0 text-start" as={ButtonGroup}>
+            <Button
+              onClick={() => handleChannelClick(channel.id)}
+              variant={channel.id === currentChannelId ? 'secondary' : 'light'}
+              className="w-100 rounded-0 text-start"
+            >
+              <span className="me-1">#</span>
+              {channel.name}
+            </Button>
+            {channel.removable && (
+              <>
+                <Dropdown.Toggle
+                  split
+                  variant={channel.id === currentChannelId ? 'secondary' : 'light'}
+                  id="dropdown-split-basic"
+                />
+                <Dropdown.Menu>
+                  <span className="visually-hidden">Управление каналом</span>
+                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                  <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                </Dropdown.Menu>
+              </>
+            )}
+          </Dropdown>
         </li>
       ))}
     </ul>
