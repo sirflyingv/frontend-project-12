@@ -1,14 +1,23 @@
-import React from 'react';
+/* eslint-disable functional/no-expression-statements */
+import React, { useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setModal } from '../State/modalSlice';
 
 const Modal = ({ children }) => {
-  const kek = 1;
-  // eslint-disable-next-line functional/no-expression-statements
-  console.log(kek);
+  const dispatch = useDispatch();
+  const backdropRef = useRef(null);
+
+  useEffect(() => {
+    backdropRef.current.addEventListener('click', () => {
+      dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
+    });
+  }, [dispatch]);
 
   return (
     <>
-      <div className="fade modal-backdrop show" />
+      <div id="backdrop" className="fade modal-backdrop show" />
       <div
+        ref={backdropRef}
         role="dialog"
         aria-modal="true"
         className="fade modal show"

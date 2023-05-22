@@ -22,7 +22,7 @@ const CreateNewChannel = () => {
   });
 
   const handleCancel = () => {
-    dispatch(setModal({ opened: false }));
+    dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
   };
 
   return (
@@ -36,6 +36,7 @@ const CreateNewChannel = () => {
           <Form.Group>
             <Form.Label className="visually-hidden">Название канала</Form.Label>
             <Form.Control
+              autoFocus
               name="name"
               onChange={formik.handleChange}
               value={formik.values.name}

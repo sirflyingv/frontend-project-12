@@ -21,7 +21,7 @@ const DeleteChannel = () => {
   };
 
   const handleCancel = () => {
-    dispatch(setModal({ opened: false }));
+    dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
   };
 
   return (

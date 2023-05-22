@@ -1,6 +1,6 @@
 /* eslint-disable functional/no-expression-statements */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,13 +18,19 @@ const RenameChannel = () => {
       socket.emit('renameChannel', { id, name }, (response) => {
         console.log(response);
       });
-      dispatch(setModal({ opened: false }));
+      dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
     },
   });
 
   const handleCancel = () => {
-    dispatch(setModal({ opened: false }));
+    dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
   };
+
+  // autoFocus weirdly doesn't work so this
+  const inputRef = useRef(null);
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   return (
     <>
@@ -37,6 +43,8 @@ const RenameChannel = () => {
           <Form.Group>
             <Form.Label className="visually-hidden">Переименовать канал</Form.Label>
             <Form.Control
+              autoFocus
+              ref={inputRef}
               name="name"
               onChange={formik.handleChange}
               value={formik.values.name}
