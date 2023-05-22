@@ -6,7 +6,8 @@ import {
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../State/currentChannelIdSlice';
-import { addChannel } from '../State/channelsSlice';
+import { addChannel, removeChannel, renameChannel } from '../State/channelsSlice';
+import { setModal } from '../State/modalSlice';
 import socket from '../ChatSocketAPI';
 
 const ChannelsList = () => {
@@ -18,16 +19,32 @@ const ChannelsList = () => {
     dispatch(actions.changeCurrentChannelId(id));
   };
 
+  const handleDeleteCLick = (id) => {
+    console.log('handle delete', id);
+    dispatch(setModal({ type: 'deleteChannel', opened: true, subjectChannel: id }));
+  };
+
+  const handleRenameCLick = (id) => {
+    dispatch(setModal({ type: 'renameChannel', opened: true, subjectChannel: id }));
+  };
+
   useEffect(() => {
-    // socket.on('connect', () => { console.log('connected'); });
-    // socket.on('disconnect', () => { console.log('disconnected'); });
     socket.on('newChannel', (channel) => {
       dispatch(addChannel(channel));
     });
+
+    socket.on('removeChannel', ({ id }) => {
+      dispatch(removeChannel(id));
+    });
+
+    socket.on('renameChannel', ({ id, name }) => {
+      dispatch(renameChannel({ id, name }));
+    });
+
     return () => {
-      // socket.off('connect');
-      // socket.off('disconnect');
       socket.off('newChannel');
+      socket.off('removeChannel');
+      socket.off('renameChannel');
     };
   }, [dispatch]);
 
@@ -53,8 +70,16 @@ const ChannelsList = () => {
                 />
                 <Dropdown.Menu>
                   <span className="visually-hidden">Управление каналом</span>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => handleDeleteCLick(channel.id)}
+                  >
+                    Удалить
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => handleRenameCLick(channel.id)}
+                  >
+                    Переименовать
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </>
             )}

@@ -3,18 +3,19 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import socket from '../../ChatSocketAPI';
 import { setModal } from '../../State/modalSlice';
 
-const CreateNewChannel = () => {
+const RenameChannel = () => {
   const dispatch = useDispatch();
+  const id = useSelector((state) => state.modal.subjectChannel);
 
   const formik = useFormik({
     initialValues: { name: '' },
     onSubmit: () => {
       const { name } = formik.values;
-      socket.emit('newChannel', { name }, (response) => {
+      socket.emit('renameChannel', { id, name }, (response) => {
         console.log(response);
       });
       dispatch(setModal({ opened: false }));
@@ -28,13 +29,13 @@ const CreateNewChannel = () => {
   return (
     <>
       <div className="modal-header">
-        <div className="modal-title h4">Добавить канал</div>
+        <div className="modal-title h4">Переименовать канал</div>
         <button onClick={handleCancel} type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" />
       </div>
       <div className="modal-body">
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Form.Label className="visually-hidden">Название канала</Form.Label>
+            <Form.Label className="visually-hidden">Переименовать канал</Form.Label>
             <Form.Control
               name="name"
               onChange={formik.handleChange}
@@ -47,7 +48,7 @@ const CreateNewChannel = () => {
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button onClick={handleCancel} variant="secondary" className="me-2">Отменить</Button>
-            <Button type="submit" variant="primary">Отправить</Button>
+            <Button type="submit" variant="primary">Переименовать</Button>
           </div>
         </Form>
       </div>
@@ -55,4 +56,4 @@ const CreateNewChannel = () => {
   );
 };
 
-export default CreateNewChannel;
+export default RenameChannel;

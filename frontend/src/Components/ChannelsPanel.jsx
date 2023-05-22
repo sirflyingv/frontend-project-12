@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import ChannelsList from './ChannelsList';
-import { actions } from '../State/modalSlice';
+import { setModal } from '../State/modalSlice';
 
 const ChannelsPanel = () => {
   const dispatch = useDispatch();
 
   const handleCLick = () => {
     // eslint-disable-next-line functional/no-expression-statements
-    dispatch(actions.setModal(true));
+    dispatch(setModal({ type: 'createChannel', opened: true }));
   };
 
   return (

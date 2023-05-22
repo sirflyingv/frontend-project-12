@@ -9,6 +9,6 @@ export default configureStore({
     channels: channelsReducer,
     messages: messagesReducer,
     currentChannelId: currentChannelIdReducer,
-    modalOpened: modalReducer,
+    modal: modalReducer,
   },
 });

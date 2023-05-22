@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ChannelsPanel from './ChannelsPanel';
 import ActiveChannel from './ActiveChannel';
 import Modal from './Modal';
-import CreateNewChannel from './modal/createNewChannel';
+import { getModalContent } from './modal/index';
 import { useAuth } from '../Contexts';
 import socket from '../ChatSocketAPI';
 
@@ -46,7 +46,9 @@ const MainPage = () => {
     auth.logOut();
   };
 
-  const modalOpened = useSelector((state) => state.modalOpened.opened);
+  const modalOpened = useSelector((state) => state.modal.opened);
+  const modalType = useSelector((state) => state.modal.type);
+  const ModalConent = getModalContent(modalType);
 
   return (
     <div className="d-flex flex-column h-100">
@@ -62,7 +64,7 @@ const MainPage = () => {
           <ActiveChannel />
         </Row>
       </Container>
-      {modalOpened ? <Modal><CreateNewChannel /></Modal> : null}
+      {modalOpened ? <Modal><ModalConent /></Modal> : null}
     </div>
   );
 };
