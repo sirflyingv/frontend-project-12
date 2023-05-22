@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import store from './State/store';
 import MainPage from './Components/MainPage';
 import LoginForm from './Components/LoginForm';
+import SignUp from './Components/SignUp';
 import NotFound from './Components/NotFound';
 
 import { AuthContext/* , SocketContext */ } from './Contexts';
@@ -58,6 +59,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<LoginForm />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

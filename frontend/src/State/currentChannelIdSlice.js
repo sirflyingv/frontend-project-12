@@ -1,6 +1,7 @@
 /* eslint-disable functional/no-expression-statements */
 import { createSlice } from '@reduxjs/toolkit';
 import fetchData from './fetchData';
+import { removeChannel } from './channelsSlice';
 
 const initialState = 1;
 
@@ -15,7 +16,14 @@ const currentChannelIdSlice = createSlice({
     //   .addCase(fetchData.pending, () => {
     //     console.log('Pending first data loading...');
     //   })
-      .addCase(fetchData.fulfilled, (state, { payload }) => (payload.currentChannelId));
+      .addCase(fetchData.fulfilled, (state, { payload }) => (payload.currentChannelId))
+      .addCase(
+        removeChannel,
+        (state, { payload }) => {
+          console.log(payload, state);
+          return (payload === state ? initialState : state);
+        },
+      );
   },
 });
 

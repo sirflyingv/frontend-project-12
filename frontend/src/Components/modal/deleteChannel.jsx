@@ -36,7 +36,6 @@ const DeleteChannel = () => {
           <Button onClick={handleCancel} variant="secondary" className="me-2">Отменить</Button>
           <Button onClick={() => handleDelete(id)} type="submit" variant="danger">Удалить</Button>
         </div>
-
       </div>
     </>
   );

@@ -8,7 +8,8 @@ const Modal = ({ children }) => {
   const backdropRef = useRef(null);
 
   useEffect(() => {
-    backdropRef.current.addEventListener('click', () => {
+    backdropRef.current.addEventListener('click', (e) => {
+      if (e.target !== backdropRef.current) return;
       dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
     });
   }, [dispatch]);
