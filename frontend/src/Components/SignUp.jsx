@@ -11,6 +11,7 @@ import { useAuth } from '../Contexts';
 const SignUp = () => {
   const content = 'Регистрация';
   const auth = useAuth();
+  console.log(auth);
   const navigate = useNavigate();
   const [isSigUpFailed, setSigUpFailed] = useState(false);
   const [failMessage, setFailMessage] = useState('Sign up failed');

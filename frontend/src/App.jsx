@@ -1,89 +1,49 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable functional/no-expression-statements */
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
-  BrowserRouter, Routes, Route,
+  Routes, Route,
+  useNavigate,
 } from 'react-router-dom';
+import { Nav, Button, Container } from 'react-bootstrap';
 import { Provider } from 'react-redux';
 import store from './State/store';
 import MainPage from './Components/MainPage';
 import LoginForm from './Components/LoginForm';
 import SignUp from './Components/SignUp';
 import NotFound from './Components/NotFound';
+import { useAuth } from './Contexts';
 
-import { AuthContext/* , SocketContext */ } from './Contexts';
+const App = () => {
+  const auth = useAuth();
+  const navigate = useNavigate();
 
-const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const logIn = async (authData) => {
-    try {
-      const res = await axios.post('/api/v1/login', authData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const { username } = authData;
-      const { token } = res.data;
-      localStorage.setItem('authData', JSON.stringify({ token, username }));
-      setLoggedIn(true);
-    } catch (err) {
-      console.error('op!', err);
-      setLoggedIn(false);
-      throw (err); // error traveling magic!!!
-    }
-  };
-
-  const signUp = async (signUpData) => {
-    try {
-      const res = await axios.post('/api/v1/signup', signUpData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const { username } = signUpData;
-      const { token } = res.data;
-      localStorage.setItem('authData', JSON.stringify({ token, username }));
-      setLoggedIn(true);
-    } catch (err) {
-      console.error('op!', err);
-      setLoggedIn(false);
-      throw (err); // error traveling magic!!!
-    }
-  };
-
-  const logOut = () => {
+  const handleLogOutButton = () => {
     localStorage.removeItem('authData');
-    setLoggedIn(false);
+    navigate('/login');
+    auth.logOut();
   };
 
   return (
-    <AuthContext.Provider value={{
-      loggedIn, logIn, logOut, signUp,
-    }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <Provider store={store}>
+      <div className="d-flex flex-column h-100">
+        <Nav variant="pills" className="shadow-sm navbar navbar-expand-lg navbar-light bg-white" defaultActiveKey="/home">
+          <Container>
+            <a href="/" className="navbar-brand">Hexlet Chat</a>
+            {auth.loggedIn ? <Button onClick={handleLogOutButton}>Выйти</Button> : null}
+          </Container>
+        </Nav>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+    </Provider>
   );
 };
-
-const App = () => (
-  <Provider store={store}>
-    <AuthProvider>
-      <div className="d-flex flex-column h-100">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </AuthProvider>
-  </Provider>
-);
 
 export default App;
