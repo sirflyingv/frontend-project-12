@@ -36,6 +36,24 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const signUp = async (signUpData) => {
+    try {
+      const res = await axios.post('/api/v1/signup', signUpData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const { username } = signUpData;
+      const { token } = res.data;
+      localStorage.setItem('authData', JSON.stringify({ token, username }));
+      setLoggedIn(true);
+    } catch (err) {
+      console.error('op!', err);
+      setLoggedIn(false);
+      throw (err); // error traveling magic!!!
+    }
+  };
+
   const logOut = () => {
     localStorage.removeItem('authData');
     setLoggedIn(false);
@@ -43,7 +61,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{
-      loggedIn, logIn, logOut,
+      loggedIn, logIn, logOut, signUp,
     }}
     >
       {children}

@@ -57,7 +57,7 @@ const LoginForm = () => {
                             type="text"
                             required
                             placeholder="Enter name"
-                            isInvalid={!!formik.errors.username}
+                            isInvalid={formik.touched.username && !!formik.errors.username}
                           />
                           <Form.Control.Feedback type="invalid">
                             {formik.errors.username}
@@ -74,7 +74,7 @@ const LoginForm = () => {
                             type="password"
                             required
                             placeholder="Password"
-                            isInvalid={!!formik.errors.password}
+                            isInvalid={formik.touched.password && !!formik.errors.password}
                           />
                           <Form.Control.Feedback type="invalid">
                             {formik.errors.password}
