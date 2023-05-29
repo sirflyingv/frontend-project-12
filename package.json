@@ -21,8 +21,6 @@
   },
   "homepage": "https://github.com/sirflyingv/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^1.1.6",
-    "formik": "^2.2.9",
-    "react-router-dom": "^6.11.1"
+    "@hexlet/chat-server": "^1.1.6"
   }
 }
