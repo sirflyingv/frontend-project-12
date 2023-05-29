@@ -1,11 +1,18 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable functional/no-expression-statements */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { actions } from '../State/messagesSlice';
 import socket from '../ChatSocketAPI';
 
 const ActiveChannel = () => {
+  const { t } = useTranslation();
+
+  const messagesBoxRef = useRef(null);
+
   const channels = useSelector((state) => state.channels);
   const messages = useSelector((state) => state.messages);
   const currentChannelId = useSelector((state) => state.currentChannelId);
@@ -16,8 +23,9 @@ const ActiveChannel = () => {
   const formik = useFormik({
     initialValues: { message: '' },
     onSubmit: ({ message }) => {
+      const filteredMessage = filter.clean(message);
       const messageData = {
-        body: message, channelId: currentChannelId, username,
+        body: filteredMessage, channelId: currentChannelId, username,
       };
       socket.emit('newMessage', messageData, (response) => {
         console.log(response);
@@ -26,25 +34,33 @@ const ActiveChannel = () => {
     },
   });
 
+  const scrollToBottom = () => {
+    // eslint-disable-next-line functional/no-conditional-statements
+    if (messagesBoxRef.current) {
+      messagesBoxRef.current.scrollTop = messagesBoxRef.current.scrollHeight;
+    }
+  };
+
   const dispatch = useDispatch();
   useEffect(() => {
     socket.on('newMessage', (message) => {
       dispatch(actions.addMessage(message));
     });
+    scrollToBottom();
     return () => {
       socket.off('newMessage');
     };
-  }, [dispatch]);
+  }, [dispatch, messages]);
 
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0"><b>{`# ${currentChannel.name}`}</b></p>
-          <span className="text-muted">{`${currentMessages.length} сообщений`}</span>
+          <span className="text-muted">{`${currentMessages.length} ${t('messagesCount')}`}</span>
         </div>
 
-        <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+        <div id="messages-box" ref={messagesBoxRef} className="chat-messages overflow-auto px-5 ">
           {currentMessages.map((message) => (
             <div key={message.id} className="text-break mb-2">
               <b>{message.username}</b>
@@ -61,8 +77,8 @@ const ActiveChannel = () => {
                 value={formik.values.message}
                 onBlur={formik.handleBlur}
                 required
-                aria-label="Новое сообщение"
-                placeholder="Введите сообщение..."
+                aria-label={t('labelNewMessage')}
+                placeholder={t('writeMessage')}
                 className="border-0 p-0 ps-2 form-control"
               />
               <button

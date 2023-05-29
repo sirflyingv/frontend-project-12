@@ -6,12 +6,13 @@ import {
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../Contexts';
 
 const SignUp = () => {
-  const content = 'Регистрация';
+  const { t } = useTranslation();
+
   const auth = useAuth();
-  console.log(auth);
   const navigate = useNavigate();
   const [isSigUpFailed, setSigUpFailed] = useState(false);
   const [failMessage, setFailMessage] = useState('Sign up failed');
@@ -20,19 +21,17 @@ const SignUp = () => {
     initialValues: { username: '', password: '', repeatPassword: '' },
     validationSchema: yup.object({
       username: yup.string()
-        .min(3, 'Must be 3 characters or more')
-        .max(20, 'Must be 20 characters or less')
-        .required('Required'),
+        .min(3, t('regErrorNameMin'))
+        .max(20, t('regErrorNameMax'))
+        .required(t('regErrorRequired')),
       password: yup.string()
-        .min(6, 'Must be 6 characters or more')
-        .required('Required'),
+        .min(6, t('regErrorPassMin'))
+        .required(t('regErrorRequired')),
       repeatPassword: yup.string()
-        .oneOf([yup.ref('password')], 'Must match password'),
+        .oneOf([yup.ref('password')], t('regErrorRepeatPass')),
 
     }),
     onSubmit: async (signUpData) => {
-      // eslint-disable-next-line functional/no-expression-statements
-      console.log(signUpData);
       const { password, username } = signUpData;
       try {
         await auth.signUp({ password, username });
@@ -51,11 +50,11 @@ const SignUp = () => {
           <Card className="shadow-sm">
             <Card.Body>
               <Card.Title>
-                <h2>{content}</h2>
+                <h2>{t('registration')}</h2>
               </Card.Title>
               <Form className="p-3" onSubmit={formik.handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>{t('regName')}</Form.Label>
                   <Form.Control
                     name="username"
                     onChange={formik.handleChange}
@@ -63,7 +62,7 @@ const SignUp = () => {
                     onBlur={formik.handleBlur}
                     type="text"
                     required
-                    placeholder="Enter name"
+                    placeholder={t('regTypeName')}
                     isInvalid={formik.touched.username && !!formik.errors.username}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -72,7 +71,7 @@ const SignUp = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>{t('regPass')}</Form.Label>
                   <Form.Control
                     name="password"
                     onChange={formik.handleChange}
@@ -80,7 +79,7 @@ const SignUp = () => {
                     onBlur={formik.handleBlur}
                     type="password"
                     required
-                    placeholder="Password"
+                    placeholder={t('regTypePass')}
                     isInvalid={formik.touched.password && !!formik.errors.password}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -89,7 +88,7 @@ const SignUp = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicRepeatPassword">
-                  <Form.Label> Repeat password</Form.Label>
+                  <Form.Label>{t('regRepeatPass')}</Form.Label>
                   <Form.Control
                     name="repeatPassword"
                     onChange={formik.handleChange}
@@ -97,7 +96,7 @@ const SignUp = () => {
                     onBlur={formik.handleBlur}
                     type="password"
                     required
-                    placeholder="repeatPassword"
+                    placeholder={t('regTypeRepeatPass')}
                     isInvalid={formik.touched.repeatPassword && !!formik.errors.repeatPassword}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -106,7 +105,7 @@ const SignUp = () => {
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
-                  Sign Up
+                  {t('signUp')}
                 </Button>
               </Form>
               { isSigUpFailed ? <Alert variant="danger">{failMessage}</Alert> : null }

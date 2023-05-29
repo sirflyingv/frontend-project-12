@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-unused-vars */
 /* eslint-disable functional/no-expression-statements */
 import React, { useEffect } from 'react';
@@ -5,12 +6,14 @@ import {
   Button, ButtonGroup, Dropdown,
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { actions } from '../State/currentChannelIdSlice';
 import { addChannel, removeChannel, renameChannel } from '../State/channelsSlice';
 import { setModal } from '../State/modalSlice';
 import socket from '../ChatSocketAPI';
 
 const ChannelsList = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels);
   const currentChannelId = useSelector((state) => state.currentChannelId);
@@ -69,16 +72,16 @@ const ChannelsList = () => {
                   id="dropdown-split-basic"
                 />
                 <Dropdown.Menu>
-                  <span className="visually-hidden">Управление каналом</span>
+                  <span className="visually-hidden">{t('editChannel')}</span>
                   <Dropdown.Item
                     onClick={() => handleDeleteCLick(channel.id)}
                   >
-                    Удалить
+                    {t('deleteChannelDropDown')}
                   </Dropdown.Item>
                   <Dropdown.Item
                     onClick={() => handleRenameCLick(channel.id)}
                   >
-                    Переименовать
+                    {t('renameChannelDropDown')}
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </>

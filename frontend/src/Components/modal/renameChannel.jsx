@@ -1,13 +1,18 @@
+/* eslint-disable functional/no-conditional-statements */
 /* eslint-disable functional/no-expression-statements */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { toastRenameChannel } from '../toastify';
 import socket from '../../ChatSocketAPI';
 import { setModal } from '../../State/modalSlice';
 
 const RenameChannel = () => {
+  const { t } = useTranslation();
+  const [isDisabled, setDisabled] = useState(false); // test
+
   const dispatch = useDispatch();
   const id = useSelector((state) => state.modal.subjectChannel);
 
@@ -15,10 +20,21 @@ const RenameChannel = () => {
     initialValues: { name: '' },
     onSubmit: () => {
       const { name } = formik.values;
-      socket.emit('renameChannel', { id, name }, (response) => {
-        console.log(response);
+      setDisabled(true); // test
+      new Promise((resolve, reject) => {
+        socket.emit('renameChannel', { id, name }, (response) => {
+          if (response.status === 'ok') {
+            resolve();
+          } else {
+            reject();
+          }
+        });
+      }).then(() => {
+        dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
+        toastRenameChannel();
+      }).catch((error) => {
+        console.log(error);
       });
-      dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
     },
   });
 
@@ -35,13 +51,13 @@ const RenameChannel = () => {
   return (
     <>
       <div className="modal-header">
-        <div className="modal-title h4">Переименовать канал</div>
+        <div className="modal-title h4">{t('renameChannel')}</div>
         <button onClick={handleCancel} type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" />
       </div>
       <div className="modal-body">
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Form.Label className="visually-hidden">Переименовать канал</Form.Label>
+            <Form.Label className="visually-hidden">{t('renameChannel')}</Form.Label>
             <Form.Control
               autoFocus
               ref={inputRef}
@@ -50,13 +66,13 @@ const RenameChannel = () => {
               value={formik.values.name}
               onBlur={formik.handleBlur}
               required
-              aria-label="Название нового канала"
+              aria-label={t('newChannelName')}
               className="mb-2 form-control"
             />
           </Form.Group>
           <div className="d-flex justify-content-end">
-            <Button onClick={handleCancel} variant="secondary" className="me-2">Отменить</Button>
-            <Button type="submit" variant="primary">Переименовать</Button>
+            <Button onClick={handleCancel} variant="secondary" className="me-2">{t('cancel')}</Button>
+            <Button type="submit" disabled={isDisabled} variant="primary">{t('rename')}</Button>
           </div>
         </Form>
       </div>

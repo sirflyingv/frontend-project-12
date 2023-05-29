@@ -1,17 +1,18 @@
 /* eslint-disable functional/no-conditional-statements */
 /* eslint-disable functional/no-expression-statements */
-import React, { /* useEffect, */ useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Button, Form, Container, Alert,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
-// import cn from 'classnames';
-// import axios from 'axios';
 import { useAuth } from '../Contexts';
 
 const LoginForm = () => {
+  const { t } = useTranslation();
+
   const [isAuthFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
   const auth = useAuth();
@@ -48,7 +49,7 @@ const LoginForm = () => {
                     <Container className="bg-light border rounded">
                       <Form className="p-3" onSubmit={formik.handleSubmit}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>Name</Form.Label>
+                          <Form.Label>{t('username')}</Form.Label>
                           <Form.Control
                             name="username"
                             onChange={formik.handleChange}
@@ -56,7 +57,7 @@ const LoginForm = () => {
                             onBlur={formik.handleBlur}
                             type="text"
                             required
-                            placeholder="Enter name"
+                            placeholder={t('enterName')}
                             isInvalid={formik.touched.username && !!formik.errors.username}
                           />
                           <Form.Control.Feedback type="invalid">
@@ -65,7 +66,7 @@ const LoginForm = () => {
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
-                          <Form.Label>Password</Form.Label>
+                          <Form.Label>{t('password')}</Form.Label>
                           <Form.Control
                             name="password"
                             onChange={formik.handleChange}
@@ -73,7 +74,7 @@ const LoginForm = () => {
                             onBlur={formik.handleBlur}
                             type="password"
                             required
-                            placeholder="Password"
+                            placeholder={t('enterPassword')}
                             isInvalid={formik.touched.password && !!formik.errors.password}
                           />
                           <Form.Control.Feedback type="invalid">
@@ -82,10 +83,10 @@ const LoginForm = () => {
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
-                          Log in
+                          {t('logIn')}
                         </Button>
                       </Form>
-                      { isAuthFailed ? <Alert variant="danger">Wrong username or passwords</Alert> : null }
+                      { isAuthFailed ? <Alert variant="danger">{t('wrongCred')}</Alert> : null }
                     </Container>
                   </div>
                 </div>
@@ -94,9 +95,9 @@ const LoginForm = () => {
           </div>
           <div className="card-footer p-4">
             <div className="text-center">
-              <span>Нет аккаунта?</span>
+              <span>{t('noAccount')}</span>
               {' '}
-              <a href="/signup">Регистрация</a>
+              <a href="/signup">{t('signup')}</a>
             </div>
           </div>
         </div>

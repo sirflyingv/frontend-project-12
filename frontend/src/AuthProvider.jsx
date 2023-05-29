@@ -7,6 +7,11 @@ import { AuthContext } from './Contexts';
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
+  const isLoggedIn = () => {
+    const authData = localStorage.getItem('authData');
+    return !!authData;
+  };
+
   const logIn = async (authData) => {
     try {
       const res = await axios.post('/api/v1/login', authData, {
@@ -50,7 +55,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{
-      loggedIn, logIn, logOut, signUp,
+      loggedIn, logIn, logOut, signUp, isLoggedIn,
     }}
     >
       {children}

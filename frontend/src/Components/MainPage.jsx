@@ -52,14 +52,8 @@ const MainPage = () => {
   const ModalConent = getModalContent(modalType);
 
   return (
-    <div className="d-flex flex-column h-100">
-      {/*
-      <Nav variant="pills" className="shadow-sm navbar navbar-expand-lg navbar-light bg-white" defaultActiveKey="/home">
-        <Container>
-          <a href="/" className="navbar-brand">Hexlet Chat</a>
-          <Button onClick={handleLogOutButton}>Выйти</Button>
-        </Container>
-      </Nav> */}
+    <>
+
       <Container className="h-100 my-4 overflow-hidden rounded shadow">
         <Row className="row h-100 bg-white flex-md-row">
           <ChannelsPanel />
@@ -67,7 +61,8 @@ const MainPage = () => {
         </Row>
       </Container>
       {modalOpened ? <Modal><ModalConent /></Modal> : null}
-    </div>
+
+    </>
   );
 };
 

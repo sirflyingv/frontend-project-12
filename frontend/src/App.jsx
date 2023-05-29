@@ -2,6 +2,9 @@
 /* eslint-disable functional/no-expression-statements */
 import React from 'react';
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Routes, Route,
@@ -9,6 +12,7 @@ import {
 } from 'react-router-dom';
 import { Nav, Button, Container } from 'react-bootstrap';
 import { Provider } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import store from './State/store';
 import MainPage from './Components/MainPage';
 import LoginForm from './Components/LoginForm';
@@ -19,6 +23,7 @@ import { useAuth } from './Contexts';
 const App = () => {
   const auth = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogOutButton = () => {
     localStorage.removeItem('authData');
@@ -28,11 +33,14 @@ const App = () => {
 
   return (
     <Provider store={store}>
+      <ToastContainer />
       <div className="d-flex flex-column h-100">
         <Nav variant="pills" className="shadow-sm navbar navbar-expand-lg navbar-light bg-white" defaultActiveKey="/home">
           <Container>
-            <a href="/" className="navbar-brand">Hexlet Chat</a>
-            {auth.loggedIn ? <Button onClick={handleLogOutButton}>Выйти</Button> : null}
+            <a href="/" className="navbar-brand">
+              {t('appHeader')}
+            </a>
+            {auth.isLoggedIn() && <Button onClick={handleLogOutButton}>{t('logOut')}</Button> }
           </Container>
         </Nav>
         <Routes>

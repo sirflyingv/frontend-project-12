@@ -1,14 +1,19 @@
+/* eslint-disable functional/no-conditional-statements */
 /* eslint-disable functional/no-expression-statements */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react'; // test
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
+import { toastNewChannel } from '../toastify';
 import socket from '../../ChatSocketAPI';
+
 import { setModal } from '../../State/modalSlice';
 
 const CreateNewChannel = () => {
+  const { t } = useTranslation();
+
   const [isDisabled, setDisabled] = useState(false); // test
   const dispatch = useDispatch();
   const channelsNames = useSelector((state) => state.channels.map((channel) => channel.name));
@@ -24,13 +29,23 @@ const CreateNewChannel = () => {
     onSubmit: () => {
       const { name } = formik.values;
       setDisabled(true); // test
-
-      socket.emit('newChannel', { name }, (response) => {
-        console.log(response);
-      });
-
-      dispatch(setModal({ opened: false }));
-      setDisabled(false); // test
+      new Promise((resolve, reject) => {
+        socket.emit('newChannel', { name }, (response) => {
+          if (response.status === 'ok') {
+            resolve();
+          } else {
+            reject();
+          }
+        });
+      })
+        .then(() => {
+          dispatch(setModal({ opened: false }));
+          setDisabled(false);
+          toastNewChannel(name);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   });
 
@@ -41,13 +56,13 @@ const CreateNewChannel = () => {
   return (
     <>
       <div className="modal-header">
-        <div className="modal-title h4">Добавить канал</div>
+        <div className="modal-title h4">{t('addChannel')}</div>
         <button onClick={handleCancel} type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" />
       </div>
       <div className="modal-body">
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Form.Label className="visually-hidden">Название канала</Form.Label>
+            <Form.Label className="visually-hidden">{t('channelsName')}</Form.Label>
             <Form.Control
               autoFocus
               name="name"
@@ -55,13 +70,13 @@ const CreateNewChannel = () => {
               value={formik.values.name}
               onBlur={formik.handleBlur}
               required
-              aria-label="Название нового канала"
+              aria-label={t('channelsName')}
               className="mb-2 form-control"
             />
           </Form.Group>
           <div className="d-flex justify-content-end">
-            <Button onClick={handleCancel} variant="secondary" disabled={isDisabled} className="me-2">Отменить</Button>
-            <Button type="submit" variant="primary" disabled={isDisabled}>Отправить</Button>
+            <Button onClick={handleCancel} variant="secondary" className="me-2">{t('cancel')}</Button>
+            <Button type="submit" disabled={isDisabled} variant="primary">{t('send')}</Button>
           </div>
         </Form>
       </div>
