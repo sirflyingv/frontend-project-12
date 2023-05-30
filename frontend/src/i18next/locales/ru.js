@@ -30,7 +30,7 @@ export default {
     toastChannelRenamed: 'Канал переименован',
     toastChannelDeleted: 'Канал удалён',
     registration: 'Регистрация',
-    regName: 'Имя',
+    regName: 'Имя пользоателя',
     regTypeName: 'Введите имя',
     regPass: 'Пароль',
     regTypePass: 'Введите пароль',
