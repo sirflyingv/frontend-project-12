@@ -96,7 +96,7 @@ const SignUp = () => {
                     onBlur={formik.handleBlur}
                     type="password"
                     required
-                    placeholder={t('regTypeRepeatPass')}
+                    placeholder={t('regRepeatPass')}
                     isInvalid={formik.touched.repeatPassword && !!formik.errors.repeatPassword}
                   />
                   <Form.Control.Feedback type="invalid">
