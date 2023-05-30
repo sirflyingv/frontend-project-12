@@ -1,11 +1,11 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/sirflyingv/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/sirflyingv/frontend-project-12/actions)",
-  "main": "index.js",
+  "description": "HexletChat",
+  "main": "./frontend/src/index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",
-    "start": "npm start --prefix frontend",
+    "start": "start-server -s ./frontend/build",
     "start_server": "start-server -s ./frontend/build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cd frontend && npm ci"
