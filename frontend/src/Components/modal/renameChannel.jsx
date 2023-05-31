@@ -57,7 +57,7 @@ const RenameChannel = () => {
       <div className="modal-body">
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Form.Label className="visually-hidden">{t('renameChannel')}</Form.Label>
+            <Form.Label htmlFor="name" className="visually-hidden">{t('renameChannel')}</Form.Label>
             <Form.Control
               autoFocus
               ref={inputRef}
