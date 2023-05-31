@@ -6,7 +6,7 @@ export default {
     writeMessage: 'Введите сообщение...',
     labelNewMessage: 'Новое сообщение',
     addChannel: 'Добавить канал',
-    channelsName: 'Название нового канала',
+    channelsName: 'Имя канала',
     cancel: 'Отменить',
     send: 'Отправить',
     delete: 'Удалить',
