@@ -1,4 +1,3 @@
-/* eslint-disable functional/no-expression-statements */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -34,7 +33,6 @@ const init = async () => {
     .use(initReactI18next)
     .init({ resources, fallbackLng: 'ru' });
 
-  // eslint-disable-next-line functional/no-expression-statements
   root.render(
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>

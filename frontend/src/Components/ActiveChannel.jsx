@@ -33,7 +33,6 @@ const ActiveChannel = () => {
   });
 
   const scrollToBottom = () => {
-    // eslint-disable-next-line functional/no-conditional-statements
     if (messagesBoxRef.current) {
       messagesBoxRef.current.scrollTop = messagesBoxRef.current.scrollHeight;
     }

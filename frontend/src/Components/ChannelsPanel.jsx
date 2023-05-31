@@ -9,7 +9,6 @@ const ChannelsPanel = () => {
   const { t } = useTranslation();
 
   const handleCLick = () => {
-    // eslint-disable-next-line functional/no-expression-statements
     dispatch(setModal({ type: 'createChannel', opened: true }));
   };
 
