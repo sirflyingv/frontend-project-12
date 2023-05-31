@@ -22,7 +22,7 @@ export default {
     logIn: 'Вход',
     noAccount: 'Нет аккаунта?',
     logOut: 'Выйти',
-    wrongCred: 'Неверные логин или пароль',
+    wrongCred: 'Неверные имя пользователя или пароль',
     editChannel: 'Управление каналом',
     deleteChannelDropDown: 'Удалить',
     renameChannelDropDown: 'Переименовать',
