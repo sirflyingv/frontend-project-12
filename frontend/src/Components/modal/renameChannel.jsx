@@ -51,13 +51,13 @@ const RenameChannel = () => {
   return (
     <>
       <div className="modal-header">
-        <div className="modal-title h4">{t('renameChannel')}</div>
+        <div className="modal-title h4">{t('renameChannelHeader')}</div>
         <button onClick={handleCancel} type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" />
       </div>
       <div className="modal-body">
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Form.Label htmlFor="name" className="visually-hidden">{t('renameChannel')}</Form.Label>
+            <Form.Label htmlFor="name" className="visually-hidden">{t('renameChannelLabel')}</Form.Label>
             <Form.Control
               autoFocus
               ref={inputRef}
