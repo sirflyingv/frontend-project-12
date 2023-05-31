@@ -21,8 +21,8 @@ const SignUp = () => {
     initialValues: { username: '', password: '', repeatPassword: '' },
     validationSchema: yup.object({
       username: yup.string()
-        .min(3, t('regErrorNameMin'))
-        .max(20, t('regErrorNameMax'))
+        .min(3, t('regErrorNameLength'))
+        .max(20, t('regErrorNameLength'))
         .required(t('regErrorRequired')),
       password: yup.string()
         .min(6, t('regErrorPassMin'))
