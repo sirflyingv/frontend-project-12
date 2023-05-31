@@ -49,7 +49,7 @@ const LoginForm = () => {
                     <Container className="bg-light border rounded">
                       <Form className="p-3" onSubmit={formik.handleSubmit}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>{t('username')}</Form.Label>
+                          <Form.Label>{t('loginUsername')}</Form.Label>
                           <Form.Control
                             name="username"
                             onChange={formik.handleChange}
@@ -66,7 +66,7 @@ const LoginForm = () => {
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
-                          <Form.Label>{t('password')}</Form.Label>
+                          <Form.Label>{t('loginPassword')}</Form.Label>
                           <Form.Control
                             name="password"
                             onChange={formik.handleChange}
