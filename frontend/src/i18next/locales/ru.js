@@ -12,7 +12,7 @@ export default {
     delete: 'Удалить',
     deleteChannel: 'Удалить канал',
     sure: 'Уверены',
-    renameChannel: 'Переименовать канал',
+    renameChannel: 'Имя канала',
     rename: 'Переименовать',
     signup: 'Регистрация',
     loginUsername: 'Ваш ник',
