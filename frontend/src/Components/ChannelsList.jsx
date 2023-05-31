@@ -70,9 +70,10 @@ const ChannelsList = () => {
                   split
                   variant={channel.id === currentChannelId ? 'secondary' : 'light'}
                   id="dropdown-split-basic"
-                />
-                <Dropdown.Menu>
+                >
                   <span className="visually-hidden">{t('editChannel')}</span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
                   <Dropdown.Item
                     onClick={() => handleDeleteCLick(channel.id)}
                   >
