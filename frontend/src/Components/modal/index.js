@@ -10,4 +10,6 @@ const modalMapping = {
 
 const getModalContent = (modalType) => modalMapping[modalType];
 
-export { CreateNewChannel, DeleteChannel, getModalContent };
+export {
+  CreateNewChannel, DeleteChannel, RenameChannel, getModalContent,
+};
