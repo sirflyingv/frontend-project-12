@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
-/* eslint-disable functional/no-expression-statements */
 import React, { useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from './Contexts';

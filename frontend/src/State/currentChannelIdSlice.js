@@ -1,4 +1,3 @@
-/* eslint-disable functional/no-expression-statements */
 import { createSlice } from '@reduxjs/toolkit';
 import fetchData from './fetchData';
 import { removeChannel } from './channelsSlice';

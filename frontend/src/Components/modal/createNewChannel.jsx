@@ -1,5 +1,3 @@
-/* eslint-disable functional/no-conditional-statements */
-/* eslint-disable functional/no-expression-statements */
 import React, { useState } from 'react'; // test
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';

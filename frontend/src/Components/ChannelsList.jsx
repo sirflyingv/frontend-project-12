@@ -1,6 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-unused-vars */
-/* eslint-disable functional/no-expression-statements */
 import React, { useEffect } from 'react';
 import {
   Button, ButtonGroup, Dropdown,

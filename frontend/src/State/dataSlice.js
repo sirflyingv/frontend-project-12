@@ -1,5 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable functional/no-expression-statements */
 import axios from 'axios';
 
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
@@ -14,7 +12,6 @@ const fetchData = createAsyncThunk(
         'Authorization': `Bearer ${token}`,
       },
     });
-    console.log(response.data);
     return response.data;
   },
 );

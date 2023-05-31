@@ -1,4 +1,3 @@
-/* eslint-disable functional/no-expression-statements */
 import React, { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setModal } from '../State/modalSlice';

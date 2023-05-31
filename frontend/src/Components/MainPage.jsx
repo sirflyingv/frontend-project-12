@@ -1,6 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable functional/no-conditional-statements */
-/* eslint-disable functional/no-expression-statements */
 import React, { useEffect /* useState */ } from 'react';
 import {
   Container, Row, /* Nav, Button, */ /* , Col, */

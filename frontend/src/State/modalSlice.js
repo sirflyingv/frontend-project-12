@@ -1,6 +1,4 @@
-/* eslint-disable functional/no-expression-statements */
 import { createSlice } from '@reduxjs/toolkit';
-// import fetchData from './fetchData';
 
 const initialState = {
   opened: false,

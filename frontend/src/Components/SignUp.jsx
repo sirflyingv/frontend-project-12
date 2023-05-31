@@ -1,5 +1,4 @@
-/* eslint-disable functional/no-expression-statements */
-import React, { /* useEffect, */ useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Card, Form, Button, Alert,
@@ -20,16 +19,18 @@ const SignUp = () => {
   const formik = useFormik({
     initialValues: { username: '', password: '', repeatPassword: '' },
     validationSchema: yup.object({
-      username: yup.string()
+      username: yup
+        .string()
         .min(3, t('regErrorNameLength'))
         .max(20, t('regErrorNameLength'))
         .required(t('regErrorRequired')),
-      password: yup.string()
+      password: yup
+        .string()
         .min(6, t('regErrorPassMin'))
         .required(t('regErrorRequired')),
-      repeatPassword: yup.string()
+      repeatPassword: yup
+        .string()
         .oneOf([yup.ref('password')], t('regErrorRepeatPass')),
-
     }),
     onSubmit: async (signUpData) => {
       const { password, username } = signUpData;
@@ -37,7 +38,11 @@ const SignUp = () => {
         await auth.signUp({ password, username });
         navigate('/');
       } catch (error) {
-        setFailMessage(error.response.status === 409 ? 'User with this name already exists' : 'Sign up failed');
+        setFailMessage(
+          error.response.status === 409
+            ? 'User with this name already exists'
+            : 'Sign up failed',
+        );
         setSigUpFailed(true);
       }
     },
@@ -63,7 +68,9 @@ const SignUp = () => {
                     type="text"
                     required
                     placeholder={t('regTypeName')}
-                    isInvalid={formik.touched.username && !!formik.errors.username}
+                    isInvalid={
+                      formik.touched.username && !!formik.errors.username
+                    }
                   />
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.username}
@@ -80,14 +87,19 @@ const SignUp = () => {
                     type="password"
                     required
                     placeholder={t('regTypePass')}
-                    isInvalid={formik.touched.password && !!formik.errors.password}
+                    isInvalid={
+                      formik.touched.password && !!formik.errors.password
+                    }
                   />
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.password}
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicRepeatPassword">
+                <Form.Group
+                  className="mb-3"
+                  controlId="formBasicRepeatPassword"
+                >
                   <Form.Label>{t('regRepeatPass')}</Form.Label>
                   <Form.Control
                     name="repeatPassword"
@@ -97,7 +109,10 @@ const SignUp = () => {
                     type="password"
                     required
                     placeholder={t('regRepeatPass')}
-                    isInvalid={formik.touched.repeatPassword && !!formik.errors.repeatPassword}
+                    isInvalid={
+                      formik.touched.repeatPassword
+                      && !!formik.errors.repeatPassword
+                    }
                   />
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.repeatPassword}
@@ -108,7 +123,9 @@ const SignUp = () => {
                   {t('signUp')}
                 </Button>
               </Form>
-              { isSigUpFailed ? <Alert variant="danger">{failMessage}</Alert> : null }
+              {isSigUpFailed ? (
+                <Alert variant="danger">{failMessage}</Alert>
+              ) : null}
             </Card.Body>
           </Card>
         </div>
