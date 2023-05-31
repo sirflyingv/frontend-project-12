@@ -62,11 +62,10 @@ const CreateNewChannel = () => {
       <div className="modal-body">
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Form.Label htmlFor="name" className="visually-hidden">{t('channelsName')}</Form.Label>
+            <Form.Label className="visually-hidden">{t('channelsName')}</Form.Label>
             <Form.Control
               autoFocus
               name="name"
-              id="name"
               onChange={formik.handleChange}
               value={formik.values.name}
               onBlur={formik.handleBlur}
