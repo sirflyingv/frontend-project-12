@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from './Contexts';
+import { loginUrl, signUpUrl } from './routes';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -12,7 +13,7 @@ const AuthProvider = ({ children }) => {
 
   const logIn = async (authData) => {
     try {
-      const res = await axios.post('/api/v1/login', authData, {
+      const res = await axios.post(loginUrl, authData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -30,7 +31,7 @@ const AuthProvider = ({ children }) => {
 
   const signUp = async (signUpData) => {
     try {
-      const res = await axios.post('/api/v1/signup', signUpData, {
+      const res = await axios.post(signUpUrl, signUpData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -52,6 +53,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <AuthContext.Provider value={{
       loggedIn, logIn, logOut, signUp, isLoggedIn,
     }}
