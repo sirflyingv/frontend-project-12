@@ -3,9 +3,6 @@ import fetchData from './fetchData';
 import { removeChannel } from './channelsSlice';
 
 const initialState = [];
-// const initialState = [{
-//   id: 3, body: 'widePeepoHappy', channelId: 1, username: 'Doooorian',
-// }];
 
 const messagesSlice = createSlice({
   name: 'messages',
@@ -15,9 +12,6 @@ const messagesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    //   .addCase(fetchData.pending, () => {
-    //     console.log('Pending first data loading...');
-    //   })
       .addCase(fetchData.fulfilled, (state, action) => (action.payload.messages))
       .addCase(
         removeChannel,

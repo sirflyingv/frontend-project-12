@@ -5,7 +5,6 @@ import resources from './locales/index.js';
 i18next
   .use(initReactI18next)
   .init({
-    // debug: true,
     lng: 'ru',
     resources,
     interpolation: {

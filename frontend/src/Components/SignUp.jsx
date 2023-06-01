@@ -40,8 +40,8 @@ const SignUp = () => {
       } catch (error) {
         setFailMessage(
           error.response.status === 409
-            ? 'User with this name already exists'
-            : 'Sign up failed',
+            ? t('userExists')
+            : t('signUpFailed'),
         );
         setSigUpFailed(true);
       }

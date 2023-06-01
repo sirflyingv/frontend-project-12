@@ -11,16 +11,11 @@ const channelsSlice = createSlice({
     removeChannel: (state, { payload }) => state.filter((channel) => channel.id !== payload),
     renameChannel: (state, { payload }) => {
       const { id, name } = payload;
-      console.log(payload);
       return state.map((channel) => (channel.id === id ? { ...channel, name } : channel));
     },
   },
   extraReducers: (builder) => {
-    builder
-    //   .addCase(fetchData.pending, () => {
-    //     console.log('Pending first data loading...');
-    //   })
-      .addCase(fetchData.fulfilled, (state, action) => (action.payload.channels));
+    builder.addCase(fetchData.fulfilled, (state, action) => (action.payload.channels));
   },
 });
 

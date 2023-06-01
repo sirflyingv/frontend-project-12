@@ -13,10 +13,6 @@ const toastDeleteChannel = () => toast.success(t('toastChannelDeleted'), {
   position: toast.POSITION.TOP_RIGHT,
 });
 
-const toastTest = () => toast.success('test', {
-  position: toast.POSITION.TOP_RIGHT,
-});
-
 export {
-  toastNewChannel, toastRenameChannel, toastDeleteChannel, toastTest,
+  toastNewChannel, toastRenameChannel, toastDeleteChannel,
 };

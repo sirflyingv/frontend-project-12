@@ -9,9 +9,7 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { Nav, Button, Container } from 'react-bootstrap';
-import { Provider } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import store from './State/store';
 import MainPage from './Components/MainPage';
 import LoginForm from './Components/LoginForm';
 import SignUp from './Components/SignUp';
@@ -30,7 +28,7 @@ const App = () => {
   };
 
   return (
-    <Provider store={store}>
+    <>
       <ToastContainer />
       <div className="d-flex flex-column h-100">
         <Nav variant="pills" className="shadow-sm navbar navbar-expand-lg navbar-light bg-white" defaultActiveKey="/home">
@@ -48,7 +46,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
-    </Provider>
+    </>
   );
 };
 

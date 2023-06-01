@@ -49,7 +49,10 @@ const ChannelsList = () => {
   }, [dispatch]);
 
   return (
-    <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
+    <ul
+      id="channels-box"
+      className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
+    >
       {channels.map((channel) => (
         <li key={channel.id} className="nav-item w-100">
           <Dropdown className="w-100 rounded-0 text-start" as={ButtonGroup}>
@@ -71,14 +74,10 @@ const ChannelsList = () => {
                   <span className="visually-hidden">{t('editChannel')}</span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={() => handleDeleteCLick(channel.id)}
-                  >
+                  <Dropdown.Item onClick={() => handleDeleteCLick(channel.id)}>
                     {t('deleteChannelDropDown')}
                   </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => handleRenameCLick(channel.id)}
-                  >
+                  <Dropdown.Item onClick={() => handleRenameCLick(channel.id)}>
                     {t('renameChannelDropDown')}
                   </Dropdown.Item>
                 </Dropdown.Menu>

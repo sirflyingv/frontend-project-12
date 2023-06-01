@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // test
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ import { setModal } from '../../State/modalSlice';
 const CreateNewChannel = () => {
   const { t } = useTranslation();
 
-  const [isDisabled, setDisabled] = useState(false); // test
+  const [isDisabled, setDisabled] = useState(false);
   const dispatch = useDispatch();
   const channelsNames = useSelector((state) => state.channels.map((channel) => channel.name));
 
@@ -26,7 +26,7 @@ const CreateNewChannel = () => {
     }),
     onSubmit: () => {
       const { name } = formik.values;
-      setDisabled(true); // test
+      setDisabled(true);
       new Promise((resolve, reject) => {
         socket.emit('newChannel', { name }, (response) => {
           if (response.status === 'ok') {

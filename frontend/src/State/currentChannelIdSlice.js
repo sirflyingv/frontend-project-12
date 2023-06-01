@@ -12,9 +12,6 @@ const currentChannelIdSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    //   .addCase(fetchData.pending, () => {
-    //     console.log('Pending first data loading...');
-    //   })
       .addCase(fetchData.fulfilled, (state, { payload }) => (payload.currentChannelId))
       .addCase(
         removeChannel,

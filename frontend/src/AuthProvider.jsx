@@ -23,7 +23,6 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem('authData', JSON.stringify({ token, username }));
       setLoggedIn(true);
     } catch (err) {
-      console.error('op!', err);
       setLoggedIn(false);
       throw (err); // error traveling magic!!!
     }

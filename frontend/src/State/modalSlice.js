@@ -12,13 +12,6 @@ const modalSlice = createSlice({
   reducers: {
     setModal: (state, { payload }) => ({ ...state, ...payload }),
   },
-//   extraReducers: (builder) => {
-//     builder
-//     //   .addCase(fetchData.pending, () => {
-//     //     console.log('Pending first data loading...');
-//     //   })
-//       .addCase(fetchData.fulfilled, (state, { payload }) => (payload.currentChannelId));
-//   },
 });
 
 export const { setModal } = modalSlice.actions;

@@ -8,13 +8,10 @@ import ChannelsPanel from './ChannelsPanel';
 import ActiveChannel from './ActiveChannel';
 import Modal from './Modal';
 import { getModalContent } from './modal/index';
-// import { useAuth } from '../Contexts';
 import socket from '../ChatSocketAPI';
-
 import fetchData from '../State/fetchData';
 
 const MainPage = () => {
-  // const auth = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,19 +35,12 @@ const MainPage = () => {
     };
   }, []);
 
-  // const handleLogOutButton = () => {
-  //   localStorage.removeItem('authData');
-  //   navigate('/login');
-  //   auth.logOut();
-  // };
-
   const modalOpened = useSelector((state) => state.modal.opened);
   const modalType = useSelector((state) => state.modal.type);
   const ModalConent = getModalContent(modalType);
 
   return (
     <>
-
       <Container className="h-100 my-4 overflow-hidden rounded shadow">
         <Row className="row h-100 bg-white flex-md-row">
           <ChannelsPanel />
@@ -58,7 +48,6 @@ const MainPage = () => {
         </Row>
       </Container>
       {modalOpened ? <Modal><ModalConent /></Modal> : null}
-
     </>
   );
 };

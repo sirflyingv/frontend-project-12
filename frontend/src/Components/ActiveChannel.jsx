@@ -22,12 +22,14 @@ const ActiveChannel = () => {
     initialValues: { message: '' },
     onSubmit: ({ message }) => {
       const filteredMessage = filter.clean(message);
+
       const messageData = {
         body: filteredMessage, channelId: currentChannelId, username,
       };
       socket.emit('newMessage', messageData, (response) => {
         console.log(response);
       });
+
       formik.values.message = '';
     },
   });
@@ -52,6 +54,7 @@ const ActiveChannel = () => {
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
+
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0"><b>{`# ${currentChannel.name}`}</b></p>
           <span className="text-muted">{`${currentMessages.length} ${t('messagesCount')}`}</span>

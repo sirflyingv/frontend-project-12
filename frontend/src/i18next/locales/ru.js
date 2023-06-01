@@ -43,5 +43,7 @@ export default {
     regErrorRepeatPass: 'Пароли должны совпадать',
     regErrorRequired: 'Необходимое поле',
     signUp: 'Зарегистрироваться',
+    signUpFailed: 'Что-то пошло не так (≧︿≦)',
+    userExists: 'Пользователь с таким именем уже существует',
   },
 };
