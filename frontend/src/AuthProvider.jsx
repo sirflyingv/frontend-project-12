@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from './Contexts';
-import { loginUrl, signUpUrl } from './routes.js';
+import { loginUrl, signUpUrl } from './routes';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
