@@ -17,7 +17,6 @@ const init = async () => {
   const root = ReactDOM.createRoot(rootEl);
 
   const i18n = i18next.createInstance();
-
   await i18n
     .use(initReactI18next)
     .init({ resources, fallbackLng: 'ru' });

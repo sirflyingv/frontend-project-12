@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import {
   Card, Form, Button, Alert,
 } from 'react-bootstrap';
+
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+
 import { useAuth } from '../Contexts';
 
 const SignUp = () => {
@@ -14,7 +16,7 @@ const SignUp = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const [isSigUpFailed, setSigUpFailed] = useState(false);
-  const [failMessage, setFailMessage] = useState('Sign up failed');
+  const [failMessage, setFailMessage] = useState(t('signUpFailed'));
 
   const formik = useFormik({
     initialValues: { username: '', password: '', repeatPassword: '' },

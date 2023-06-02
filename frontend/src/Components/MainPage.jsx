@@ -1,7 +1,5 @@
-import React, { useEffect /* useState */ } from 'react';
-import {
-  Container, Row, /* Nav, Button, */ /* , Col, */
-} from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import { Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ChannelsPanel from './ChannelsPanel';
@@ -27,8 +25,8 @@ const MainPage = () => {
   }, [dispatch, navigate]);
 
   useEffect(() => {
-    socket.on('connect', () => { console.log('connected'); });
-    socket.on('disconnect', () => { console.log('disconnected'); });
+    socket.on('connect', () => { });
+    socket.on('disconnect', () => { });
     return () => {
       socket.off('connect');
       socket.off('disconnect');

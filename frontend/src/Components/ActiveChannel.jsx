@@ -22,14 +22,11 @@ const ActiveChannel = () => {
     initialValues: { message: '' },
     onSubmit: ({ message }) => {
       const filteredMessage = filter.clean(message);
-
       const messageData = {
         body: filteredMessage, channelId: currentChannelId, username,
       };
-      socket.emit('newMessage', messageData, (response) => {
-        console.log(response);
-      });
 
+      socket.emit('newMessage', messageData);
       formik.values.message = '';
     },
   });
@@ -41,6 +38,7 @@ const ActiveChannel = () => {
   };
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     socket.on('newMessage', (message) => {
       dispatch(actions.addMessage(message));

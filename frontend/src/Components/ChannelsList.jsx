@@ -20,7 +20,6 @@ const ChannelsList = () => {
   };
 
   const handleDeleteCLick = (id) => {
-    console.log('handle delete', id);
     dispatch(setModal({ type: 'deleteChannel', opened: true, subjectChannel: id }));
   };
 

@@ -1,9 +1,21 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import notFound from '../assets/404.svg';
 
 const NotFound = () => {
-  const content = 'Are you lost?';
+  const { t } = useTranslation();
+
   return (
-    <h1>{content}</h1>
+    <div className="text-center">
+      <img alt={t('pageNotFound')} className="img-fluid h-25" src={notFound} />
+      <h1 className="h4 text-muted">{t('pageNotFound')}</h1>
+      <p className="text-muted">
+        {t('butCanNavigate')}
+        {' '}
+        <a href="/">{t('toMain')}</a>
+      </p>
+
+    </div>
   );
 };
 
