@@ -4,19 +4,21 @@ import {
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { actions } from '../State/currentChannelIdSlice';
-import { addChannel, removeChannel, renameChannel } from '../State/channelsSlice';
+// import { actions } from '../State/currentChannelIdSlice';
+import {
+  addChannel, removeChannel, renameChannel, changeCurrentChannelId,
+} from '../State/channelsSlice';
 import { setModal } from '../State/modalSlice';
 import socket from '../ChatSocketAPI';
 
 const ChannelsList = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const channels = useSelector((state) => state.channels);
-  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const channels = useSelector((state) => state.channels.channels);
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
 
   const handleChannelClick = (id) => {
-    dispatch(actions.changeCurrentChannelId(id));
+    dispatch(changeCurrentChannelId(id));
   };
 
   const handleDeleteCLick = (id) => {

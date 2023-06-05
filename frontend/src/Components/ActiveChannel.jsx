@@ -11,9 +11,9 @@ const ActiveChannel = () => {
 
   const messagesBoxRef = useRef(null);
 
-  const channels = useSelector((state) => state.channels);
+  const channels = useSelector((state) => state.channels.channels);
   const messages = useSelector((state) => state.messages);
-  const currentChannelId = useSelector((state) => state.currentChannelId);
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const currentChannel = channels.find((channel) => channel.id === currentChannelId);
   const currentMessages = messages.filter((message) => message.channelId === currentChannelId);
   const { username } = JSON.parse(localStorage.getItem('authData')) || 'f';

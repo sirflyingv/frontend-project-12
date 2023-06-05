@@ -14,7 +14,8 @@ const CreateNewChannel = () => {
 
   const [isDisabled, setDisabled] = useState(false);
   const dispatch = useDispatch();
-  const channelsNames = useSelector((state) => state.channels.map((channel) => channel.name));
+  const channelsNames = useSelector((state) => state.channels.channels
+    .map((channel) => channel.name));
 
   const formik = useFormik({
     initialValues: { name: '' },
