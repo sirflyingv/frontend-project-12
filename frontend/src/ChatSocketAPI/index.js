@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 import store from '../State/store';
 import {
-  addChannel, removeChannel, renameChannel, /* , changeCurrentChannelId, */
+  addChannel, removeChannel, renameChannel,
 } from '../State/channelsSlice';
 import { addMessage } from '../State/messagesSlice';
 
@@ -29,7 +29,6 @@ const chatAPI = {
   createNewChannel: (name) => new Promise((resolve, reject) => {
     socket.emit('newChannel', { name }, (response) => {
       if (response.status === 'ok') {
-        // dispatch(changeCurrentChannelId(response.data.id));
         resolve(response.data);
       } else {
         reject();

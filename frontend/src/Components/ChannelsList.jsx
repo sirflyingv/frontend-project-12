@@ -1,15 +1,11 @@
-import React/* , { useEffect } */ from 'react';
+import React from 'react';
 import {
   Button, ButtonGroup, Dropdown,
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-// import { actions } from '../State/currentChannelIdSlice';
-import {
-  /* addChannel, removeChannel, renameChannel, */ changeCurrentChannelId,
-} from '../State/channelsSlice';
+import { changeCurrentChannelId } from '../State/channelsSlice';
 import { setModal } from '../State/modalSlice';
-// import socket from '../ChatSocketAPI';
 
 const ChannelsList = () => {
   const { t } = useTranslation();
@@ -28,26 +24,6 @@ const ChannelsList = () => {
   const handleRenameCLick = (id) => {
     dispatch(setModal({ type: 'renameChannel', opened: true, subjectChannel: id }));
   };
-
-  // useEffect(() => {
-  //   socket.on('newChannel', (channel) => {
-  //     dispatch(addChannel(channel));
-  //   });
-
-  //   socket.on('removeChannel', ({ id }) => {
-  //     dispatch(removeChannel(id));
-  //   });
-
-  //   socket.on('renameChannel', ({ id, name }) => {
-  //     dispatch(renameChannel({ id, name }));
-  //   });
-
-  //   return () => {
-  //     socket.off('newChannel');
-  //     socket.off('removeChannel');
-  //     socket.off('renameChannel');
-  //   };
-  // }, [dispatch]);
 
   return (
     <ul

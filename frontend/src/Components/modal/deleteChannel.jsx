@@ -3,8 +3,6 @@ import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toastDeleteChannel } from '../toastify';
-// import socket from '../../ChatSocketAPI';
-// import { deleteChannel } from '../../ChatSocketAPI';
 import { useChatAPI } from '../../Contexts';
 
 import { setModal } from '../../State/modalSlice';

@@ -4,9 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toastRenameChannel } from '../toastify';
-// import socket from '../../ChatSocketAPI';
 import { useChatAPI } from '../../Contexts';
-
 import { setModal } from '../../State/modalSlice';
 
 const RenameChannel = () => {
