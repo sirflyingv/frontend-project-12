@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import axios from 'axios';
 import { AuthContext } from './Contexts';
 import { loginUrl, signUpUrl } from './routes.js';
@@ -51,12 +51,12 @@ const AuthProvider = ({ children }) => {
     setLoggedIn(false);
   };
 
+  const authAPI = useMemo(() => ({
+    loggedIn, logIn, logOut, signUp, isLoggedIn,
+  }), [loggedIn]);
+
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <AuthContext.Provider value={{
-      loggedIn, logIn, logOut, signUp, isLoggedIn,
-    }}
-    >
+    <AuthContext.Provider value={authAPI}>
       {children}
     </AuthContext.Provider>
   );
