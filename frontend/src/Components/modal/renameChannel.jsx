@@ -4,35 +4,28 @@ import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toastRenameChannel } from '../toastify';
-import socket from '../../ChatSocketAPI';
+// import socket from '../../ChatSocketAPI';
+import { useChatAPI } from '../../Contexts';
+
 import { setModal } from '../../State/modalSlice';
 
 const RenameChannel = () => {
   const { t } = useTranslation();
   const [isDisabled, setDisabled] = useState(false); // test
 
+  const chatAPI = useChatAPI();
+
   const dispatch = useDispatch();
   const id = useSelector((state) => state.modal.subjectChannel);
 
   const formik = useFormik({
     initialValues: { name: '' },
-    onSubmit: () => {
+    onSubmit: async () => {
       const { name } = formik.values;
       setDisabled(true); // test
-      new Promise((resolve, reject) => {
-        socket.emit('renameChannel', { id, name }, (response) => {
-          if (response.status === 'ok') {
-            resolve();
-          } else {
-            reject();
-          }
-        });
-      }).then(() => {
-        dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
-        toastRenameChannel();
-      }).catch((error) => {
-        console.log(error);
-      });
+      await chatAPI.renameChannelAPI(id, name);
+      dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
+      toastRenameChannel();
     },
   });
 

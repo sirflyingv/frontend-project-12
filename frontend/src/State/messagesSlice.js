@@ -20,5 +20,5 @@ const messagesSlice = createSlice({
   },
 });
 
-export const { actions } = messagesSlice;
+export const { addMessage } = messagesSlice.actions;
 export default messagesSlice.reducer;

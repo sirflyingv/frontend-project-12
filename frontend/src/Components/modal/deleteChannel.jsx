@@ -3,33 +3,31 @@ import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toastDeleteChannel } from '../toastify';
-import socket from '../../ChatSocketAPI';
+// import socket from '../../ChatSocketAPI';
+// import { deleteChannel } from '../../ChatSocketAPI';
+import { useChatAPI } from '../../Contexts';
+
 import { setModal } from '../../State/modalSlice';
+import { changeCurrentChannelId } from '../../State/channelsSlice';
 
 const DeleteChannel = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const chatAPI = useChatAPI();
+
   const [isDisabled, setDisabled] = useState(false); // test
 
   const id = useSelector((state) => state.modal.subjectChannel);
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
 
-  const handleDelete = (channelId) => {
+  const handleDelete = async (channelId) => {
     setDisabled(true); // test
-    new Promise((resolve, reject) => {
-      socket.emit('removeChannel', { id: channelId }, (response) => {
-        if (response.status === 'ok') {
-          resolve();
-        } else {
-          reject();
-        }
-      });
-    }).then(() => {
-      setDisabled(false);
-      dispatch(setModal({ opened: false }));
-      toastDeleteChannel();
-    }).catch((error) => {
-      console.log(error);
-    });
+    await chatAPI.deleteChannel(channelId);
+    dispatch(setModal({ opened: false }));
+    setDisabled(false);
+    toastDeleteChannel();
+    if (channelId === currentChannelId) dispatch(changeCurrentChannelId(1)); // magic number
   };
 
   const handleCancel = () => {

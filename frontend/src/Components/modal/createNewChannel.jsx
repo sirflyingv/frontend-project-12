@@ -5,14 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toastNewChannel } from '../toastify';
-import socket from '../../ChatSocketAPI';
 
+// import { createNewChannel } from '../../ChatSocketAPI';
+import { useChatAPI } from '../../Contexts';
+
+import { changeCurrentChannelId } from '../../State/channelsSlice';
 import { setModal } from '../../State/modalSlice';
 
 const CreateNewChannel = () => {
   const { t } = useTranslation();
 
   const [isDisabled, setDisabled] = useState(false);
+
+  const chatAPI = useChatAPI();
   const dispatch = useDispatch();
   const channelsNames = useSelector((state) => state.channels.channels
     .map((channel) => channel.name));
@@ -25,26 +30,13 @@ const CreateNewChannel = () => {
         .notOneOf(channelsNames, 'Channel with this name already exists')
         .max(15, 'Must be 15 characters or less'),
     }),
-    onSubmit: () => {
+    onSubmit: async () => {
       const { name } = formik.values;
       setDisabled(true);
-      new Promise((resolve, reject) => {
-        socket.emit('newChannel', { name }, (response) => {
-          if (response.status === 'ok') {
-            resolve();
-          } else {
-            reject();
-          }
-        });
-      })
-        .then(() => {
-          dispatch(setModal({ opened: false }));
-          setDisabled(false);
-          toastNewChannel(name);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const { id } = await chatAPI.createNewChannel(name);
+      dispatch(changeCurrentChannelId(id));
+      dispatch(setModal({ opened: false }));
+      toastNewChannel(name);
     },
   });
 

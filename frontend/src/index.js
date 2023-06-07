@@ -10,6 +10,8 @@ import store from './State/store';
 import resources from './i18next/locales/index';
 import App from './App';
 import AuthProvider from './AuthProvider';
+import { chatAPI } from './ChatSocketAPI';
+import { ChatAPIContext } from './Contexts';
 import rollbarConfig from './config/rollbarConfig';
 
 const init = async () => {
@@ -26,11 +28,13 @@ const init = async () => {
       <RollbarProvider config={rollbarConfig}>
         <ErrorBoundary>
           <AuthProvider>
-            <I18nextProvider i18n={i18n}>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
-            </I18nextProvider>
+            <ChatAPIContext.Provider value={chatAPI}>
+              <I18nextProvider i18n={i18n}>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </I18nextProvider>
+            </ChatAPIContext.Provider>
           </AuthProvider>
         </ErrorBoundary>
       </RollbarProvider>

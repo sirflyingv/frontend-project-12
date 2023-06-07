@@ -1,22 +1,27 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
-import { actions } from '../State/messagesSlice';
-import socket from '../ChatSocketAPI';
+
+import { useChatAPI } from '../Contexts';
 
 const ActiveChannel = () => {
   const { t } = useTranslation();
+
+  const chatAPI = useChatAPI();
 
   const messagesBoxRef = useRef(null);
 
   const channels = useSelector((state) => state.channels.channels);
   const messages = useSelector((state) => state.messages);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const currentChannel = channels.find((channel) => channel.id === currentChannelId);
+
+  // checking if current channel found, if no, using dummy channel object
+  const currentChannel = channels.find((channel) => channel.id === currentChannelId) || { name: '' };
+
   const currentMessages = messages.filter((message) => message.channelId === currentChannelId);
-  const { username } = JSON.parse(localStorage.getItem('authData')) || 'f';
+  const { username } = JSON.parse(localStorage.getItem('authData'));
 
   const formik = useFormik({
     initialValues: { message: '' },
@@ -26,7 +31,7 @@ const ActiveChannel = () => {
         body: filteredMessage, channelId: currentChannelId, username,
       };
 
-      socket.emit('newMessage', messageData);
+      chatAPI.sendMessage(messageData);
       formik.values.message = '';
     },
   });
@@ -37,17 +42,9 @@ const ActiveChannel = () => {
     }
   };
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    socket.on('newMessage', (message) => {
-      dispatch(actions.addMessage(message));
-    });
     scrollToBottom();
-    return () => {
-      socket.off('newMessage');
-    };
-  }, [dispatch, messages]);
+  }, [messages]); // how it works?
 
   return (
     <div className="col p-0 h-100">
