@@ -21,7 +21,7 @@ const ActiveChannel = () => {
   const currentChannel = channels.find((channel) => channel.id === currentChannelId) || { name: '' };
 
   const currentMessages = messages.filter((message) => message.channelId === currentChannelId);
-  const { username } = JSON.parse(localStorage.getItem('authData'));
+  const { username } = JSON.parse(localStorage.getItem('authData')) || '';
 
   const formik = useFormik({
     initialValues: { message: '' },
