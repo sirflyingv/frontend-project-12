@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { useAuth } from './Contexts';
 
+import appRoutes from './routes/appRoutes';
 import MainPage from './Components/MainPage';
 import LoginForm from './Components/LoginForm';
 import SignUp from './Components/SignUp';
@@ -29,12 +30,12 @@ const App = () => {
 
   const handleLogOutButton = () => {
     localStorage.removeItem('authData');
-    navigate('/login');
+    navigate(appRoutes.loginPage);
     auth.logOut();
   };
 
   const handleLogInButton = () => {
-    navigate('/login');
+    navigate(appRoutes.loginPage);
   };
 
   return (
@@ -63,8 +64,8 @@ const App = () => {
               </ProtectedRoute>
          )}
           />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path={appRoutes.loginPage} element={<LoginForm />} />
+          <Route path={appRoutes.signUpPage} element={<SignUp />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
