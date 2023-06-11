@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ChannelsPanel from './ChannelsPanel';
 import ActiveChannel from './ActiveChannel';
@@ -10,7 +9,6 @@ import socket from '../ChatSocketAPI';
 import fetchData from '../State/fetchData';
 
 const MainPage = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,9 +18,9 @@ const MainPage = () => {
       dispatch(fetchData(token));
       socket.connect();
     } catch (error) {
-      navigate('/login');
+      console.error(error);
     }
-  }, [dispatch, navigate]);
+  }, [dispatch]);
 
   useEffect(() => {
     socket.on('connect', () => { });

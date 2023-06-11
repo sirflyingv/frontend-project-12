@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav, Button, Container } from 'react-bootstrap';
 import {
   Routes, Route,
-  useNavigate,
+  useNavigate, Navigate,
 } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +17,11 @@ import LoginForm from './Components/LoginForm';
 import SignUp from './Components/SignUp';
 import NotFound from './Components/NotFound';
 
+const ProtectedRoute = ({ isAllowed, children }) => {
+  if (!isAllowed) return <Navigate to="/login" replace />;
+  return children;
+};
+
 const App = () => {
   const auth = useAuth();
   const navigate = useNavigate();
@@ -26,6 +31,10 @@ const App = () => {
     localStorage.removeItem('authData');
     navigate('/login');
     auth.logOut();
+  };
+
+  const handleLogInButton = () => {
+    navigate('/login');
   };
 
   return (
@@ -39,12 +48,21 @@ const App = () => {
             <a href="/" className="navbar-brand">
               {t('appHeader')}
             </a>
-            {auth.isLoggedIn() && <Button onClick={handleLogOutButton}>{t('logOut')}</Button> }
+            {auth.isLoggedIn()
+              ? (<Button onClick={handleLogOutButton}>{t('logOut')}</Button>)
+              : (<Button onClick={handleLogInButton}>{t('doLogIn')}</Button>) }
           </Container>
         </Nav>
 
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route
+            path="/"
+            element={(
+              <ProtectedRoute isAllowed={auth.isLoggedIn()}>
+                <MainPage />
+              </ProtectedRoute>
+         )}
+          />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="*" element={<NotFound />} />
