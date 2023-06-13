@@ -2,7 +2,7 @@ import React from 'react';
 import { Nav, Button, Container } from 'react-bootstrap';
 import {
   Routes, Route,
-  useNavigate, Navigate,
+  useNavigate, Navigate, Outlet,
 } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useTranslation } from 'react-i18next';
@@ -18,10 +18,9 @@ import LoginForm from './Components/LoginForm';
 import SignUp from './Components/SignUp';
 import NotFound from './Components/NotFound';
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = () => {
   const auth = useAuth();
-  if (!auth.isLoggedIn()) return <Navigate to={appRoutes.loginPage} replace />;
-  return children;
+  return auth.isLoggedIn() ? <Outlet /> : <Navigate to={appRoutes.loginPage} replace />;
 };
 
 const View = () => {
@@ -47,7 +46,7 @@ const View = () => {
 
         <Nav variant="pills" className="shadow-sm navbar navbar-expand-lg navbar-light bg-white" defaultActiveKey="/home">
           <Container>
-            <a href="/" className="navbar-brand">
+            <a href={appRoutes.mainPage} className="navbar-brand">
               {t('appHeader')}
             </a>
             {auth.isLoggedIn()
@@ -57,14 +56,9 @@ const View = () => {
         </Nav>
 
         <Routes>
-          <Route
-            path="/"
-            element={(
-              <ProtectedRoute>
-                <MainPage />
-              </ProtectedRoute>
-         )}
-          />
+          <Route path={appRoutes.mainPage} element={<ProtectedRoute />}>
+            <Route path="" element={<MainPage />} />
+          </Route>
           <Route path={appRoutes.loginPage} element={<LoginForm />} />
           <Route path={appRoutes.signUpPage} element={<SignUp />} />
           <Route path="*" element={<NotFound />} />
