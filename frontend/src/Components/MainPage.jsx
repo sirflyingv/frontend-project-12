@@ -5,7 +5,6 @@ import ChannelsPanel from './ChannelsPanel';
 import ActiveChannel from './ActiveChannel';
 import Modal from './Modal';
 import { getModalContent } from './modal/index';
-import socket from '../ChatSocketAPI';
 import fetchData from '../State/fetchData';
 
 const MainPage = () => {
@@ -16,20 +15,10 @@ const MainPage = () => {
       const authData = JSON.parse(localStorage.getItem('authData'));
       const { token } = authData;
       dispatch(fetchData(token));
-      socket.connect();
     } catch (error) {
       console.error(error);
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    socket.on('connect', () => { });
-    socket.on('disconnect', () => { });
-    return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-    };
-  }, []);
 
   const modalOpened = useSelector((state) => state.modal.opened);
   const modalType = useSelector((state) => state.modal.type);

@@ -18,12 +18,13 @@ import LoginForm from './Components/LoginForm';
 import SignUp from './Components/SignUp';
 import NotFound from './Components/NotFound';
 
-const ProtectedRoute = ({ isAllowed, children }) => {
-  if (!isAllowed) return <Navigate to="/login" replace />;
+const ProtectedRoute = ({ children }) => {
+  const auth = useAuth();
+  if (!auth.isLoggedIn()) return <Navigate to={appRoutes.loginPage} replace />;
   return children;
 };
 
-const App = () => {
+const View = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -59,7 +60,7 @@ const App = () => {
           <Route
             path="/"
             element={(
-              <ProtectedRoute isAllowed={auth.isLoggedIn()}>
+              <ProtectedRoute>
                 <MainPage />
               </ProtectedRoute>
          )}
@@ -74,4 +75,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default View;
