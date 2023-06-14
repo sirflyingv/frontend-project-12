@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
 import { useAuth } from '../Contexts';
+import appRoutes from '../routes/appRoutes';
 
 const LoginForm = () => {
   const { t } = useTranslation();
@@ -19,16 +20,14 @@ const LoginForm = () => {
     initialValues: { username: '', password: '' },
     validationSchema: yup.object({
       username: yup.string()
-        .max(15, 'Must be 15 characters or less')
-        .required('Required'),
+        .required(),
       password: yup.string()
-        .min(4, 'Must be 6 characters or more')
-        .required('Required'),
+        .required(),
     }),
     onSubmit: async (authData) => {
       try {
         await auth.logIn(authData);
-        navigate('/');
+        navigate(appRoutes.mainPage);
       } catch (error) {
         setAuthFailed(true);
       }
@@ -56,11 +55,8 @@ const LoginForm = () => {
                             type="text"
                             required
                             placeholder={t('enterName')}
-                            isInvalid={formik.touched.username && !!formik.errors.username}
+                            isInvalid={isAuthFailed}
                           />
-                          <Form.Control.Feedback type="invalid">
-                            {formik.errors.username}
-                          </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -73,11 +69,8 @@ const LoginForm = () => {
                             type="password"
                             required
                             placeholder={t('enterPassword')}
-                            isInvalid={formik.touched.password && !!formik.errors.password}
+                            isInvalid={isAuthFailed}
                           />
-                          <Form.Control.Feedback type="invalid">
-                            {formik.errors.password}
-                          </Form.Control.Feedback>
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
