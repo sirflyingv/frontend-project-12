@@ -13,6 +13,8 @@ const LoginForm = () => {
   const { t } = useTranslation();
 
   const [isAuthFailed, setAuthFailed] = useState(false);
+  const [alertMessage, setAlertMessage] = useState();
+
   const navigate = useNavigate();
   const auth = useAuth();
 
@@ -29,7 +31,15 @@ const LoginForm = () => {
         await auth.logIn(authData);
         navigate(appRoutes.mainPage);
       } catch (error) {
-        setAuthFailed(true);
+        console.log(error);
+        if (error.code === 'ERR_NETWORK') {
+          setAlertMessage(t('networkError'));
+        } else if (error.response.status === 401) {
+          setAlertMessage(t('wrongCredError'));
+          setAuthFailed(true);
+        } else {
+          setAlertMessage(t('unspecifiedError'));
+        }
       }
     },
   });
@@ -77,7 +87,7 @@ const LoginForm = () => {
                           {t('logIn')}
                         </Button>
                       </Form>
-                      { isAuthFailed ? <Alert variant="danger">{t('wrongCred')}</Alert> : null }
+                      { alertMessage ? <Alert variant="danger">{alertMessage}</Alert> : null }
                     </Container>
                   </div>
                 </div>

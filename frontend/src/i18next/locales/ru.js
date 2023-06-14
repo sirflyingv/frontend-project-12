@@ -24,7 +24,6 @@ export default {
     noAccount: 'Нет аккаунта?',
     logOut: 'Выйти',
     doLogIn: 'Войти',
-    wrongCred: 'Неверные имя пользователя или пароль',
     editChannel: 'Управление каналом',
     deleteChannelDropDown: 'Удалить',
     renameChannelDropDown: 'Переименовать',
@@ -50,5 +49,8 @@ export default {
     pageNotFound: 'Страница не найдена',
     butCanNavigate: 'Но вы можете перейти',
     toMain: 'на главную страницу',
+    wrongCredError: 'Неверные имя пользователя или пароль',
+    unspecifiedError: 'Что-то пошло не так',
+    networkError: 'Ошибка сети',
   },
 };
