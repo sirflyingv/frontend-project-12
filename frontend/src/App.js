@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
@@ -48,9 +47,7 @@ const App = async () => {
           <AuthProvider>
             <ChatAPIContext.Provider value={chatAPI}>
               <I18nextProvider i18n={i18n}>
-                <BrowserRouter>
-                  <View />
-                </BrowserRouter>
+                <View />
               </I18nextProvider>
             </ChatAPIContext.Provider>
           </AuthProvider>

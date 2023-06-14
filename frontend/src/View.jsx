@@ -25,35 +25,28 @@ const ProtectedRoute = () => {
 
 const View = () => {
   const auth = useAuth();
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const handleLogOutButton = () => {
-    localStorage.removeItem('authData');
-    navigate(appRoutes.loginPage);
-    auth.logOut();
-  };
-
-  const handleLogInButton = () => {
-    navigate(appRoutes.loginPage);
-  };
-
   return (
-    <>
+    <BrowserRouter>
+
       <ToastContainer />
 
       <div className="d-flex flex-column h-100">
-
-        <Nav variant="pills" className="shadow-sm navbar navbar-expand-lg navbar-light bg-white" defaultActiveKey="/home">
+        <Navbar variant="pills" className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
           <Container>
-            <a href={appRoutes.mainPage} className="navbar-brand">
+            <Navbar.Brand href={appRoutes.mainPage}>
               {t('appHeader')}
-            </a>
-            {auth.isLoggedIn()
-              ? (<Button onClick={handleLogOutButton}>{t('logOut')}</Button>)
-              : (<Button onClick={handleLogInButton}>{t('doLogIn')}</Button>) }
+            </Navbar.Brand>
+            <Nav>
+              <Nav.Link href={appRoutes.loginPage} className="p-0">
+                {auth.isLoggedIn()
+                  ? (<Button onClick={auth.logOut}>{t('logOut')}</Button>)
+                  : null }
+              </Nav.Link>
+            </Nav>
           </Container>
-        </Nav>
+        </Navbar>
 
         <Routes>
           <Route path={appRoutes.mainPage} element={<ProtectedRoute />}>
@@ -63,9 +56,9 @@ const View = () => {
           <Route path={appRoutes.signUpPage} element={<SignUp />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-
       </div>
-    </>
+
+    </BrowserRouter>
   );
 };
 
