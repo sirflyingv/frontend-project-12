@@ -1,10 +1,14 @@
 import React from 'react';
-import { Nav, Button, Container } from 'react-bootstrap';
 import {
+  Navbar, Nav, Button, Container,
+} from 'react-bootstrap';
+
+import {
+  BrowserRouter,
   Routes, Route,
-  useNavigate, Navigate, Outlet,
+  Navigate, Outlet,
 } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { useTranslation } from 'react-i18next';
 
 import 'react-toastify/dist/ReactToastify.css';
