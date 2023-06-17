@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { dataUrl } from '../routes/apiRoutes.js';
+import { dataUrl } from './routes/apiRoutes.js';
 
 const fetchData = createAsyncThunk(
   'data/fetchData',

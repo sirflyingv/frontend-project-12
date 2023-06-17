@@ -5,7 +5,7 @@ import ChannelsPanel from './ChannelsPanel';
 import ActiveChannel from './ActiveChannel';
 import Modal from './Modal';
 import { getModalContent } from './modal/index';
-import fetchData from '../State/fetchData';
+import fetchData from '../fetchData';
 
 const MainPage = () => {
   const dispatch = useDispatch();

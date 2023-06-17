@@ -4,8 +4,8 @@ import {
 } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { changeCurrentChannelId } from '../State/channelsSlice';
-import { setModal } from '../State/modalSlice';
+import { changeCurrentChannelId } from '../state/channelsSlice';
+import { setModal } from '../state/modalSlice';
 
 const ChannelsList = () => {
   const { t } = useTranslation();

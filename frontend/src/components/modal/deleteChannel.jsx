@@ -3,10 +3,10 @@ import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toastDeleteChannel } from '../toastify';
-import { useChatAPI } from '../../Contexts';
+import { useChatAPI } from '../../contexts';
 
-import { setModal } from '../../State/modalSlice';
-import { changeCurrentChannelId } from '../../State/channelsSlice';
+import { setModal } from '../../state/modalSlice';
+import { changeCurrentChannelId } from '../../state/channelsSlice';
 
 const DeleteChannel = () => {
   const { t } = useTranslation();

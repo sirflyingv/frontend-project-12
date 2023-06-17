@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setModal } from '../State/modalSlice';
+import { setModal } from '../state/modalSlice';
 
 const Modal = ({ children }) => {
   const dispatch = useDispatch();

@@ -14,13 +14,13 @@ import { useTranslation } from 'react-i18next';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
-import { useAuth } from './Contexts';
+import { useAuth } from './contexts';
 
 import appRoutes from './routes/appRoutes';
-import MainPage from './Components/MainPage';
-import LoginForm from './Components/LoginForm';
-import SignUp from './Components/SignUp';
-import NotFound from './Components/NotFound';
+import MainPage from './components/MainPage';
+import LoginForm from './components/LoginForm';
+import SignUp from './components/SignUp';
+import NotFound from './components/NotFound';
 
 const ProtectedRoute = () => {
   const auth = useAuth();

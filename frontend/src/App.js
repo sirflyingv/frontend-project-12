@@ -6,17 +6,17 @@ import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { Provider as StoreProvider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { io } from 'socket.io-client';
-import reducers from './State/store';
+import reducers from './state/store';
 import {
   addChannel, removeChannel, renameChannel,
-} from './State/channelsSlice';
-import { addMessage } from './State/messagesSlice';
+} from './state/channelsSlice';
+import { addMessage } from './state/messagesSlice';
 
 import resources from './i18next/locales/index';
 import View from './View';
 import AuthProvider from './AuthProvider';
-import createChatAPI from './ChatSocketAPI';
-import { ChatAPIContext } from './Contexts';
+import createChatAPI from './chatSocketAPI';
+import { ChatAPIContext } from './contexts';
 import rollbarConfig from './config/rollbarConfig';
 
 const App = async () => {

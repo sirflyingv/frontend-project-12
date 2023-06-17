@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import notFound from '../assets/404.svg';
+import appRoutes from '../routes/appRoutes';
 
 const NotFound = () => {
   const { t } = useTranslation();
@@ -12,7 +13,7 @@ const NotFound = () => {
       <p className="text-muted">
         {t('butCanNavigate')}
         {' '}
-        <a href="/">{t('toMain')}</a>
+        <a href={appRoutes.mainPage}>{t('toMain')}</a>
       </p>
 
     </div>

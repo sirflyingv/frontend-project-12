@@ -6,11 +6,10 @@ import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toastNewChannel } from '../toastify';
 
-// import { createNewChannel } from '../../ChatSocketAPI';
-import { useChatAPI } from '../../Contexts';
+import { useChatAPI } from '../../contexts';
 
-import { changeCurrentChannelId } from '../../State/channelsSlice';
-import { setModal } from '../../State/modalSlice';
+import { changeCurrentChannelId } from '../../state/channelsSlice';
+import { setModal } from '../../state/modalSlice';
 
 const CreateNewChannel = () => {
   const { t } = useTranslation();
@@ -27,8 +26,8 @@ const CreateNewChannel = () => {
     validationSchema: yup.object({
       name: yup.string()
         .required('Required')
-        .notOneOf(channelsNames, 'Channel with this name already exists')
-        .max(15, 'Must be 15 characters or less'),
+        .notOneOf(channelsNames, t('errorChannelNameIsAlreadyUsed'))
+        .max(15, t('errorNewChanelNameMax')),
     }),
     onSubmit: async () => {
       const { name } = formik.values;
@@ -63,7 +62,11 @@ const CreateNewChannel = () => {
               required
               aria-label={t('channelsName')}
               className="mb-2 form-control"
+              isInvalid={formik.touched.name && !!formik.errors.name}
             />
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.name}
+            </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button onClick={handleCancel} variant="secondary" className="me-2">{t('cancel')}</Button>

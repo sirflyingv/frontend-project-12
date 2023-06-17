@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import ChannelsList from './ChannelsList';
-import { setModal } from '../State/modalSlice';
+import { setModal } from '../state/modalSlice';
 
 const ChannelsPanel = () => {
   const dispatch = useDispatch();

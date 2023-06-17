@@ -8,15 +8,22 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 
-import { useAuth } from '../Contexts';
+import { useAuth } from '../contexts';
+import appRoutes from '../routes/appRoutes';
 
 const SignUp = () => {
   const { t } = useTranslation();
 
+  const errorMessageMapping = {
+    networkError: t('networkError'),
+    serverConflict: t('userExists'),
+    other: t('unspecifiedError'),
+  };
+
   const auth = useAuth();
   const navigate = useNavigate();
   const [isSigUpFailed, setSigUpFailed] = useState(false);
-  const [failMessage, setFailMessage] = useState(t('signUpFailed'));
+  const [errorKey, setErrorKey] = useState();
 
   const formik = useFormik({
     initialValues: { username: '', password: '', repeatPassword: '' },
@@ -38,14 +45,17 @@ const SignUp = () => {
       const { password, username } = signUpData;
       try {
         await auth.signUp({ password, username });
-        navigate('/');
+        navigate(appRoutes.mainPage);
       } catch (error) {
-        setFailMessage(
-          error.response.status === 409
-            ? t('userExists')
-            : t('signUpFailed'),
-        );
+        console.log(error);
         setSigUpFailed(true);
+        if (error.code === 'ERR_NETWORK') {
+          setErrorKey('networkError');
+        } else if (error.response.status === 409) {
+          setErrorKey('serverConflict');
+        } else {
+          setErrorKey('other');
+        }
       }
     },
   });
@@ -63,6 +73,7 @@ const SignUp = () => {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>{t('regName')}</Form.Label>
                   <Form.Control
+                    autoFocus
                     name="username"
                     onChange={formik.handleChange}
                     value={formik.values.username}
@@ -126,7 +137,7 @@ const SignUp = () => {
                 </Button>
               </Form>
               {isSigUpFailed ? (
-                <Alert variant="danger">{failMessage}</Alert>
+                <Alert className="m-0" variant="danger">{errorMessageMapping[errorKey]}</Alert>
               ) : null}
             </Card.Body>
           </Card>

@@ -6,14 +6,21 @@ import {
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
-import { useAuth } from '../Contexts';
+import { useAuth } from '../contexts';
 import appRoutes from '../routes/appRoutes';
 
 const LoginForm = () => {
   const { t } = useTranslation();
 
+  const errorMessageMapping = {
+    networkError: t('networkError'),
+    wrongCred: t('wrongCredError'),
+    other: t('unspecifiedError'),
+  };
+
   const [isAuthFailed, setAuthFailed] = useState(false);
-  const [alertMessage, setAlertMessage] = useState();
+
+  const [errorKey, setErrorKey] = useState();
 
   const navigate = useNavigate();
   const auth = useAuth();
@@ -33,12 +40,12 @@ const LoginForm = () => {
       } catch (error) {
         console.log(error);
         if (error.code === 'ERR_NETWORK') {
-          setAlertMessage(t('networkError'));
+          setErrorKey('networkError');
         } else if (error.response.status === 401) {
-          setAlertMessage(t('wrongCredError'));
+          setErrorKey('wrongCred');
           setAuthFailed(true);
         } else {
-          setAlertMessage(t('unspecifiedError'));
+          setErrorKey('other');
         }
       }
     },
@@ -58,6 +65,7 @@ const LoginForm = () => {
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                           <Form.Label>{t('loginUsername')}</Form.Label>
                           <Form.Control
+                            autoFocus
                             name="username"
                             onChange={formik.handleChange}
                             value={formik.values.username}
@@ -87,7 +95,7 @@ const LoginForm = () => {
                           {t('logIn')}
                         </Button>
                       </Form>
-                      { alertMessage ? <Alert variant="danger">{alertMessage}</Alert> : null }
+                      { errorKey ? <Alert variant="danger">{errorMessageMapping[errorKey]}</Alert> : null }
                     </Container>
                   </div>
                 </div>

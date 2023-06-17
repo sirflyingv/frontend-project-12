@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 
-import { useChatAPI } from '../Contexts';
+import { useChatAPI } from '../contexts';
 
 const ActiveChannel = () => {
   const { t } = useTranslation();
@@ -12,6 +12,7 @@ const ActiveChannel = () => {
   const chatAPI = useChatAPI();
 
   const messagesBoxRef = useRef(null);
+  const messageInput = useRef(null);
 
   const channels = useSelector((state) => state.channels.channels);
   const messages = useSelector((state) => state.messages);
@@ -43,8 +44,9 @@ const ActiveChannel = () => {
   };
 
   useEffect(() => {
+    messageInput.current.focus();
     scrollToBottom();
-  }, [messages]); // how it works?
+  }, [messages, currentChannelId]); // how it works?
 
   return (
     <div className="col p-0 h-100">
@@ -67,6 +69,7 @@ const ActiveChannel = () => {
           <form noValidate="" onSubmit={formik.handleSubmit} className="py-1 border rounded-2">
             <div className="input-group has-validation">
               <input
+                ref={messageInput}
                 name="message"
                 onChange={formik.handleChange}
                 value={formik.values.message}

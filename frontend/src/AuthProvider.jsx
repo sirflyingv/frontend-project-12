@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import axios from 'axios';
-import { AuthContext } from './Contexts';
+import { AuthContext } from './contexts';
 import { loginUrl, signUpUrl } from './routes/apiRoutes.js';
 
 const AuthProvider = ({ children }) => {

@@ -2,10 +2,11 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toastRenameChannel } from '../toastify';
-import { useChatAPI } from '../../Contexts';
-import { setModal } from '../../State/modalSlice';
+import { useChatAPI } from '../../contexts';
+import { setModal } from '../../state/modalSlice';
 
 const RenameChannel = () => {
   const { t } = useTranslation();
@@ -14,16 +15,25 @@ const RenameChannel = () => {
   const chatAPI = useChatAPI();
 
   const dispatch = useDispatch();
+  const channels = useSelector((state) => state.channels.channels);
+  const channelsNames = channels.map((channel) => channel.name);
   const id = useSelector((state) => state.modal.subjectChannel);
+  const currentChannel = channels.find((channel) => channel.id === id);
 
   const formik = useFormik({
     initialValues: { name: '' },
+    validationSchema: yup.object({
+      name: yup.string()
+        .required('Required')
+        .notOneOf(channelsNames, t('errorChannelNameIsAlreadyUsed'))
+        .max(15, t('errorNewChanelNameMax')),
+    }),
     onSubmit: async () => {
       const { name } = formik.values;
       setDisabled(true); // test
       await chatAPI.renameChannelAPI(id, name);
       dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
-      toastRenameChannel();
+      toastRenameChannel({ oldName: currentChannel.name, newName: name });
     },
   });
 
@@ -48,7 +58,6 @@ const RenameChannel = () => {
           <Form.Group>
             <Form.Label htmlFor="name" className="visually-hidden">{t('renameChannelLabel')}</Form.Label>
             <Form.Control
-              autoFocus
               ref={inputRef}
               id="name"
               name="name"
@@ -58,7 +67,11 @@ const RenameChannel = () => {
               required
               aria-label={t('newChannelName')}
               className="mb-2 form-control"
+              isInvalid={formik.touched.name && !!formik.errors.name}
             />
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.name}
+            </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button onClick={handleCancel} variant="secondary" className="me-2">{t('cancel')}</Button>
