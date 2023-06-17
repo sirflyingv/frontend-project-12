@@ -26,7 +26,7 @@ const RenameChannel = () => {
       name: yup.string()
         .required('Required')
         .notOneOf(channelsNames, t('errorChannelNameIsAlreadyUsed'))
-        .max(15, t('errorNewChanelNameMax')),
+        .max(20, t('errorNewChanelNameMax')),
     }),
     onSubmit: async () => {
       const { name } = formik.values;
