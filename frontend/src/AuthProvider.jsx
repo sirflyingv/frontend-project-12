@@ -28,6 +28,8 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const getUserData = () => JSON.parse(localStorage.getItem('authData'));
+
   const signUp = async (signUpData) => {
     try {
       const res = await axios.post(signUpUrl, signUpData, {
@@ -52,7 +54,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const authAPI = useMemo(() => ({
-    loggedIn, logIn, logOut, signUp, isLoggedIn,
+    loggedIn, logIn, logOut, signUp, isLoggedIn, getUserData,
   }), [loggedIn]);
 
   return (

@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
-
-import { useChatAPI } from '../contexts';
+import { useAuth, useChatAPI } from '../contexts';
 
 const ActiveChannel = () => {
   const { t } = useTranslation();
 
   const chatAPI = useChatAPI();
+  const auth = useAuth();
 
   const messagesBoxRef = useRef(null);
   const messageInput = useRef(null);
@@ -22,7 +22,7 @@ const ActiveChannel = () => {
   const currentChannel = channels.find((channel) => channel.id === currentChannelId) || { name: '' };
 
   const currentMessages = messages.filter((message) => message.channelId === currentChannelId);
-  const { username } = JSON.parse(localStorage.getItem('authData')) || '';
+  const { username } = auth.getUserData();
 
   const formik = useFormik({
     initialValues: { message: '' },

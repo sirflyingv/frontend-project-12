@@ -20,9 +20,8 @@ const Modal = ({ children }) => {
         ref={backdropRef}
         role="dialog"
         aria-modal="true"
-        className="fade modal show"
+        className="d-block fade modal show"
         tabIndex="-1"
-        style={{ display: 'block' }}
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">{children}</div>

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import fetchData from '../fetchData';
 
 const initialState = {
   currentChannelId: 1,
@@ -10,6 +9,7 @@ const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
+    setChannels: (state, { payload }) => (payload),
     changeCurrentChannelId: (state, { payload }) => ({ ...state, currentChannelId: payload }),
     addChannel: (state, { payload }) => ({
       currentChannelId: state.currentChannelId,
@@ -29,15 +29,9 @@ const channelsSlice = createSlice({
       });
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(fetchData.fulfilled, (state, { payload }) => ({
-      currentChannelId: payload.currentChannelId,
-      channels: payload.channels,
-    }));
-  },
 });
 
 export const {
-  addChannel, removeChannel, renameChannel, changeCurrentChannelId,
+  setChannels, addChannel, removeChannel, renameChannel, changeCurrentChannelId,
 } = channelsSlice.actions;
 export default channelsSlice.reducer;

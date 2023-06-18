@@ -1,24 +1,43 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import { Container, Row } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setChannels } from '../state/channelsSlice';
+import { setMessages } from '../state/messagesSlice';
+import { dataUrl } from '../routes/apiRoutes';
 import ChannelsPanel from './ChannelsPanel';
 import ActiveChannel from './ActiveChannel';
 import Modal from './Modal';
 import { getModalContent } from './modal/index';
-import fetchData from '../fetchData';
+import { useAuth } from '../contexts';
+import appRoutes from '../routes/appRoutes';
+// import fetchData from '../fetchData';
 
 const MainPage = () => {
   const dispatch = useDispatch();
+  const auth = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    try {
-      const authData = JSON.parse(localStorage.getItem('authData'));
-      const { token } = authData;
-      dispatch(fetchData(token));
-    } catch (error) {
-      console.error(error);
-    }
-  }, [dispatch]);
+    const { token } = auth.getUserData();
+    const fetchData111 = async () => {
+      try {
+        const { data } = await axios.get(dataUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        dispatch(setMessages(data.messages));
+        dispatch(setChannels({ channels: data.channels, currentChannelId: data.currentChannelId }));
+      } catch (error) {
+        if (error.response.status === 401) {
+          navigate(appRoutes.loginPage);
+        }
+      }
+    };
+    fetchData111();
+  }, [auth, dispatch, navigate]);
 
   const modalOpened = useSelector((state) => state.modal.opened);
   const modalType = useSelector((state) => state.modal.type);
