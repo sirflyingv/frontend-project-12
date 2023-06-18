@@ -13,6 +13,14 @@ const toastDeleteChannel = (name) => toast.success(t('toastChannelDeleted', { na
   position: toast.POSITION.TOP_RIGHT,
 });
 
+const toastNetworkError = () => toast.error(t('toastNoConnectionToServer'), {
+  position: toast.POSITION.TOP_RIGHT,
+});
+
+const toastUnspecifiedError = () => toast.error(t('toastUnspecifiedError'), {
+  position: toast.POSITION.TOP_RIGHT,
+});
+
 export {
-  toastNewChannel, toastRenameChannel, toastDeleteChannel,
+  toastNewChannel, toastRenameChannel, toastDeleteChannel, toastNetworkError, toastUnspecifiedError,
 };

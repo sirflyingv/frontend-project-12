@@ -12,6 +12,7 @@ import Modal from './Modal';
 import { getModalContent } from './modal/index';
 import { useAuth } from '../contexts';
 import appRoutes from '../routes/appRoutes';
+import { toastNetworkError, toastUnspecifiedError } from './toastify';
 // import fetchData from '../fetchData';
 
 const MainPage = () => {
@@ -21,7 +22,7 @@ const MainPage = () => {
 
   useEffect(() => {
     const { token } = auth.getUserData();
-    const fetchData111 = async () => {
+    const fetchData = async () => {
       try {
         const { data } = await axios.get(dataUrl, {
           headers: {
@@ -31,12 +32,16 @@ const MainPage = () => {
         dispatch(setMessages(data.messages));
         dispatch(setChannels({ channels: data.channels, currentChannelId: data.currentChannelId }));
       } catch (error) {
-        if (error.response.status === 401) {
+        if (error.code === 'ERR_NETWORK') {
+          toastNetworkError();
+        } else if (error.response.status === 401) {
           navigate(appRoutes.loginPage);
+        } else {
+          toastUnspecifiedError();
         }
       }
     };
-    fetchData111();
+    fetchData();
   }, [auth, dispatch, navigate]);
 
   const modalOpened = useSelector((state) => state.modal.opened);
