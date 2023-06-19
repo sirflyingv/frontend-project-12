@@ -1,43 +1,14 @@
-// const withTimeout = (onSuccess, onTimeout, timeout) => {
-//   // eslint-disable-next-line functional/no-let
-//   let called = false;
-
-//   const timer = setTimeout(() => {
-//     if (called) return;
-//     called = true;
-//     onTimeout();
-//   }, timeout);
-
-//   return (...args) => {
-//     if (called) return;
-//     called = true;
-//     clearTimeout(timer);
-//     onSuccess.apply(this, args);
-//   };
-// };
-
-// socket.emit('hello', 1, 2, withTimeout(() => {
-//   console.log('success!');
-// }, () => {
-//   console.log('timeout!');
-// }, 1000));
+const TIMEOUT_TIME = 3000;
 
 const createChatAPI = (socketIoInstance) => {
   const withTimeout = async (promise, timeout) => {
-    // eslint-disable-next-line functional/no-let
-    let timeoutId;
-
     const timeoutPromise = new Promise((resolve, reject) => {
-      timeoutId = setTimeout(() => {
+      setTimeout(() => {
         reject(new Error('Socket emit timed out'));
       }, timeout);
     });
 
-    try {
-      return await Promise.race([promise, timeoutPromise]);
-    } finally {
-      clearTimeout(timeoutId);
-    }
+    return Promise.race([promise, timeoutPromise]);
   };
 
   return {
@@ -52,7 +23,7 @@ const createChatAPI = (socketIoInstance) => {
         });
       });
 
-      return withTimeout(emitNewChannel, 3000); // Adjust the timeout value as needed
+      return withTimeout(emitNewChannel, TIMEOUT_TIME);
     },
 
     deleteChannel: (id) => {
@@ -66,7 +37,7 @@ const createChatAPI = (socketIoInstance) => {
         });
       });
 
-      return withTimeout(emitDeleteChannel, 5000); // Adjust the timeout value as needed
+      return withTimeout(emitDeleteChannel, TIMEOUT_TIME);
     },
 
     renameChannelAPI: (id, name) => {
@@ -80,30 +51,9 @@ const createChatAPI = (socketIoInstance) => {
         });
       });
 
-      return withTimeout(emitRenameChannel, 5000); // Adjust the timeout value as needed
+      return withTimeout(emitRenameChannel, TIMEOUT_TIME);
     },
 
-    // deleteChannel: (id) => new Promise((resolve, reject) => {
-    //   socketIoInstance.emit('removeChannel', { id }, (response) => {
-    //     if (response.status === 'ok') {
-    //       resolve();
-    //     } else {
-    //       reject();
-    //     }
-    //   });
-    // }),
-
-    // renameChannelAPI: (id, name) => new Promise((resolve, reject) => {
-    //   socketIoInstance.emit('renameChannel', { id, name }, (response) => {
-    //     if (response.status === 'ok') {
-    //       resolve();
-    //     } else {
-    //       reject();
-    //     }
-    //   });
-    // }),
-
-    // sendMessage: (messageData) => socketIoInstance.emit('newMessage', messageData),
     sendMessage: (messageData) => {
       const emitNewMessage = new Promise((resolve, reject) => {
         socketIoInstance.emit('newMessage', messageData, (response) => {
@@ -115,7 +65,7 @@ const createChatAPI = (socketIoInstance) => {
         });
       });
 
-      return withTimeout(emitNewMessage, 1500);
+      return withTimeout(emitNewMessage, TIMEOUT_TIME);
     },
   };
 };
