@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { toastDeleteChannel } from '../toastify';
+import { toastDeleteChannel, toastNetworkError } from '../toastify';
 import { useChatAPI } from '../../contexts';
 
 import { setModal } from '../../state/modalSlice';
@@ -20,12 +20,18 @@ const DeleteChannel = () => {
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
 
   const handleDelete = async (channelId) => {
-    setDisabled(true); // test
-    await chatAPI.deleteChannel(channelId);
-    dispatch(setModal({ opened: false }));
-    setDisabled(false);
-    toastDeleteChannel();
-    if (channelId === currentChannelId) dispatch(changeCurrentChannelId(1)); // magic number
+    try {
+      setDisabled(true); // test
+      await chatAPI.deleteChannel(channelId);
+      dispatch(setModal({ opened: false }));
+      setDisabled(false);
+      toastDeleteChannel();
+      if (channelId === currentChannelId) dispatch(changeCurrentChannelId(1)); // magic number
+    } catch (error) {
+      console.log(error);
+      toastNetworkError();
+      setDisabled(false);
+    }
   };
 
   const handleCancel = () => {

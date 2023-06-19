@@ -23,7 +23,7 @@
 // }, 1000));
 
 const createChatAPI = (socketIoInstance) => {
-  const withTimeout = (promise, timeout) => {
+  const withTimeout = async (promise, timeout) => {
     // eslint-disable-next-line functional/no-let
     let timeoutId;
 
@@ -33,9 +33,11 @@ const createChatAPI = (socketIoInstance) => {
       }, timeout);
     });
 
-    return Promise.race([promise, timeoutPromise]).finally(() => {
+    try {
+      return await Promise.race([promise, timeoutPromise]);
+    } finally {
       clearTimeout(timeoutId);
-    });
+    }
   };
 
   return {
@@ -101,7 +103,20 @@ const createChatAPI = (socketIoInstance) => {
     //   });
     // }),
 
-    sendMessage: (messageData) => socketIoInstance.emit('newMessage', messageData),
+    // sendMessage: (messageData) => socketIoInstance.emit('newMessage', messageData),
+    sendMessage: (messageData) => {
+      const emitNewMessage = new Promise((resolve, reject) => {
+        socketIoInstance.emit('newMessage', messageData, (response) => {
+          if (response.status === 'ok') {
+            resolve();
+          } else {
+            reject();
+          }
+        });
+      });
+
+      return withTimeout(emitNewMessage, 1500);
+    },
   };
 };
 

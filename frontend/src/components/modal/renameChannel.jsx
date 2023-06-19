@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { toastRenameChannel } from '../toastify';
+import { toastRenameChannel, toastNetworkError } from '../toastify';
 import { useChatAPI } from '../../contexts';
 import { setModal } from '../../state/modalSlice';
 
@@ -29,11 +29,17 @@ const RenameChannel = () => {
         .max(20, t('errorNewChanelNameMax')),
     }),
     onSubmit: async () => {
-      const { name } = formik.values;
-      setDisabled(true); // test
-      await chatAPI.renameChannelAPI(id, name);
-      dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
-      toastRenameChannel({ oldName: currentChannel.name, newName: name });
+      try {
+        const { name } = formik.values;
+        setDisabled(true); // test
+        await chatAPI.renameChannelAPI(id, name);
+        dispatch(setModal({ type: '', opened: false, subjectChannel: undefined }));
+        toastRenameChannel({ oldName: currentChannel.name, newName: name });
+      } catch (error) {
+        console.log(error);
+        toastNetworkError();
+        setDisabled(false);
+      }
     },
   });
 

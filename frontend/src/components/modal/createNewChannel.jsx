@@ -30,7 +30,7 @@ const CreateNewChannel = () => {
         .max(20, t('errorNewChanelNameMax')),
     }),
     onSubmit: async () => {
-      try { // this will really work with proper promisifying of socket
+      try {
         const { name } = formik.values;
         setDisabled(true);
         const { id } = await chatAPI.createNewChannel(name);
@@ -38,6 +38,7 @@ const CreateNewChannel = () => {
         dispatch(setModal({ opened: false }));
         toastNewChannel(name);
       } catch (error) {
+        setDisabled(false);
         toastNetworkError();
         console.log(error);
       }

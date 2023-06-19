@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
+import { toastNetworkError } from './toastify/index';
 import { useAuth, useChatAPI } from '../contexts';
 
 const ActiveChannel = () => {
@@ -26,14 +27,18 @@ const ActiveChannel = () => {
 
   const formik = useFormik({
     initialValues: { message: '' },
-    onSubmit: ({ message }) => {
+    onSubmit: async ({ message }) => {
       const filteredMessage = filter.clean(message);
       const messageData = {
         body: filteredMessage, channelId: currentChannelId, username,
       };
-
-      chatAPI.sendMessage(messageData);
-      formik.values.message = '';
+      try {
+        await chatAPI.sendMessage(messageData);
+        formik.values.message = '';
+      } catch (error) {
+        console.log(error);
+        toastNetworkError();
+      }
     },
   });
 
