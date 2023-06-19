@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { toastNewChannel } from '../toastify';
+import { toastNewChannel, toastNetworkError } from '../toastify';
 
 import { useChatAPI } from '../../contexts';
 
@@ -38,6 +38,7 @@ const CreateNewChannel = () => {
         dispatch(setModal({ opened: false }));
         toastNewChannel(name);
       } catch (error) {
+        toastNetworkError();
         console.log(error);
       }
     },
