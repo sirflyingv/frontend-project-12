@@ -15,9 +15,9 @@ const SignUp = () => {
   const { t } = useTranslation();
 
   const errorMessageMapping = {
-    networkError: t('networkError'),
-    serverConflict: t('userExists'),
-    other: t('unspecifiedError'),
+    networkError: t('error.network'),
+    serverConflict: t('signUpForm.userExists'),
+    other: t('error.unspecified'),
   };
 
   const auth = useAuth();
@@ -30,16 +30,16 @@ const SignUp = () => {
     validationSchema: yup.object({
       username: yup
         .string()
-        .min(3, t('regErrorNameLength'))
-        .max(20, t('regErrorNameLength'))
-        .required(t('regErrorRequired')),
+        .min(3, t('signUpForm.errorNameLength'))
+        .max(20, t('signUpForm.errorNameLength'))
+        .required(t('signUpForm.errorRequired')),
       password: yup
         .string()
-        .min(6, t('regErrorPassMin'))
-        .required(t('regErrorRequired')),
+        .min(6, t('signUpForm.errorPassMin'))
+        .required(t('signUpForm.errorRequired')),
       repeatPassword: yup
         .string()
-        .oneOf([yup.ref('password')], t('regErrorRepeatPass')),
+        .oneOf([yup.ref('password')], t('signUpForm.errorRepeatPassword')),
     }),
     onSubmit: async (signUpData) => {
       const { password, username } = signUpData;
@@ -67,11 +67,11 @@ const SignUp = () => {
           <Card className="shadow-sm">
             <Card.Body>
               <Card.Title>
-                <h2>{t('registration')}</h2>
+                <h2>{t('signUpForm.header')}</h2>
               </Card.Title>
               <Form className="p-3" onSubmit={formik.handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>{t('regName')}</Form.Label>
+                  <Form.Label>{t('signUpForm.username')}</Form.Label>
                   <Form.Control
                     autoFocus
                     name="username"
@@ -80,7 +80,7 @@ const SignUp = () => {
                     onBlur={formik.handleBlur}
                     type="text"
                     required
-                    placeholder={t('regTypeName')}
+                    placeholder={t('signUpForm.typeName')}
                     isInvalid={
                       formik.touched.username && !!formik.errors.username
                     }
@@ -91,7 +91,7 @@ const SignUp = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>{t('regPass')}</Form.Label>
+                  <Form.Label>{t('signUpForm.password')}</Form.Label>
                   <Form.Control
                     name="password"
                     onChange={formik.handleChange}
@@ -99,7 +99,7 @@ const SignUp = () => {
                     onBlur={formik.handleBlur}
                     type="password"
                     required
-                    placeholder={t('regTypePass')}
+                    placeholder={t('signUpForm.typePassword')}
                     isInvalid={
                       formik.touched.password && !!formik.errors.password
                     }
@@ -113,7 +113,7 @@ const SignUp = () => {
                   className="mb-3"
                   controlId="formBasicRepeatPassword"
                 >
-                  <Form.Label>{t('regRepeatPass')}</Form.Label>
+                  <Form.Label>{t('signUpForm.repeatPassword')}</Form.Label>
                   <Form.Control
                     name="repeatPassword"
                     onChange={formik.handleChange}
@@ -121,7 +121,7 @@ const SignUp = () => {
                     onBlur={formik.handleBlur}
                     type="password"
                     required
-                    placeholder={t('regRepeatPass')}
+                    placeholder={t('signUpForm.repeatPassword')}
                     isInvalid={
                       formik.touched.repeatPassword
                       && !!formik.errors.repeatPassword
@@ -133,7 +133,7 @@ const SignUp = () => {
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
-                  {t('signUp')}
+                  {t('signUpForm.signUp')}
                 </Button>
               </Form>
               {isSigUpFailed ? (

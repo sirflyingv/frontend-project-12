@@ -41,14 +41,14 @@ const DeleteChannel = () => {
   return (
     <>
       <div className="modal-header">
-        <div className="modal-title h4">{t('deleteChannel')}</div>
+        <div className="modal-title h4">{t('modalDeleteChannel.deleteChannel')}</div>
         <button onClick={handleCancel} type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" />
       </div>
       <div className="modal-body">
-        <p className="lead">{t('sure')}</p>
+        <p className="lead">{t('modalDeleteChannel.sure')}</p>
         <div className="d-flex justify-content-end">
-          <Button onClick={handleCancel} variant="secondary" className="me-2">{t('cancel')}</Button>
-          <Button onClick={() => handleDelete(id)} type="submit" disabled={isDisabled} variant="danger">{t('delete')}</Button>
+          <Button onClick={handleCancel} variant="secondary" className="me-2">{t('modalDeleteChannel.cancel')}</Button>
+          <Button onClick={() => handleDelete(id)} type="submit" disabled={isDisabled} variant="danger">{t('modalDeleteChannel.delete')}</Button>
         </div>
       </div>
     </>

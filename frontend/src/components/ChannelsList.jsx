@@ -48,14 +48,14 @@ const ChannelsList = () => {
                   variant={channel.id === currentChannelId ? 'secondary' : 'light'}
                   id="dropdown-split-basic"
                 >
-                  <span className="visually-hidden">{t('editChannel')}</span>
+                  <span className="visually-hidden">{t('channelsList.editChannel')}</span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => handleDeleteCLick(channel.id)}>
-                    {t('deleteChannelDropDown')}
+                    {t('channelsList.deleteChannelDropDown')}
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleRenameCLick(channel.id)}>
-                    {t('renameChannelDropDown')}
+                    {t('channelsList.renameChannelDropDown')}
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </>

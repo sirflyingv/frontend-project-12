@@ -59,7 +59,7 @@ const ActiveChannel = () => {
 
         <div className="bg-light mb-4 p-3 shadow-sm small">
           <p className="m-0"><b>{`# ${currentChannel.name}`}</b></p>
-          <span className="text-muted">{`${currentMessages.length} ${t('messagesCount')}`}</span>
+          <span className="text-muted">{`${currentMessages.length} ${t('activeChannel.messagesCount')}`}</span>
         </div>
 
         <div id="messages-box" ref={messagesBoxRef} className="chat-messages overflow-auto px-5 ">
@@ -80,8 +80,8 @@ const ActiveChannel = () => {
                 value={formik.values.message}
                 onBlur={formik.handleBlur}
                 required
-                aria-label={t('labelNewMessage')}
-                placeholder={t('writeMessage')}
+                aria-label={t('activeChannel.labelNewMessage')}
+                placeholder={t('activeChannel.writeMessage')}
                 className="border-0 p-0 ps-2 form-control"
               />
               <button

@@ -13,9 +13,9 @@ const LoginForm = () => {
   const { t } = useTranslation();
 
   const errorMessageMapping = {
-    networkError: t('networkError'),
-    wrongCred: t('wrongCredError'),
-    other: t('unspecifiedError'),
+    networkError: t('error.network'),
+    wrongCred: t('error.wrongCred'),
+    other: t('error.unspecified'),
   };
 
   const [isAuthFailed, setAuthFailed] = useState(false);
@@ -63,7 +63,7 @@ const LoginForm = () => {
                     <Container className="bg-light border rounded">
                       <Form className="p-3" onSubmit={formik.handleSubmit}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                          <Form.Label>{t('loginUsername')}</Form.Label>
+                          <Form.Label>{t('loginForm.username')}</Form.Label>
                           <Form.Control
                             autoFocus
                             name="username"
@@ -72,13 +72,13 @@ const LoginForm = () => {
                             onBlur={formik.handleBlur}
                             type="text"
                             required
-                            placeholder={t('enterName')}
+                            placeholder={t('loginForm.enterName')}
                             isInvalid={isAuthFailed}
                           />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
-                          <Form.Label>{t('loginPassword')}</Form.Label>
+                          <Form.Label>{t('loginForm.password')}</Form.Label>
                           <Form.Control
                             name="password"
                             onChange={formik.handleChange}
@@ -86,13 +86,13 @@ const LoginForm = () => {
                             onBlur={formik.handleBlur}
                             type="password"
                             required
-                            placeholder={t('enterPassword')}
+                            placeholder={t('loginForm.enterPassword')}
                             isInvalid={isAuthFailed}
                           />
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
-                          {t('logIn')}
+                          {t('loginForm.logIn')}
                         </Button>
                       </Form>
                       { errorKey ? <Alert variant="danger">{errorMessageMapping[errorKey]}</Alert> : null }
@@ -104,9 +104,9 @@ const LoginForm = () => {
           </div>
           <div className="card-footer p-4">
             <div className="text-center">
-              <span>{t('noAccount')}</span>
+              <span>{t('loginForm.noAccount')}</span>
               {' '}
-              <a href="/signup">{t('signup')}</a>
+              <a href="/signup">{t('loginForm.signup')}</a>
             </div>
           </div>
         </div>

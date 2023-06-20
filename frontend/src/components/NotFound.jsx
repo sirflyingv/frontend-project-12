@@ -8,12 +8,12 @@ const NotFound = () => {
 
   return (
     <div className="text-center">
-      <img alt={t('pageNotFound')} className="img-fluid h-25" src={notFound} />
-      <h1 className="h4 text-muted">{t('pageNotFound')}</h1>
+      <img alt={t('notFound.header')} className="img-fluid h-25" src={notFound} />
+      <h1 className="h4 text-muted">{t('notFound.header')}</h1>
       <p className="text-muted">
-        {t('butCanNavigate')}
+        {t('notFound.butCanNavigate')}
         {' '}
-        <a href={appRoutes.mainPage}>{t('toMain')}</a>
+        <a href={appRoutes.mainPage}>{t('notFound.toMain')}</a>
       </p>
 
     </div>

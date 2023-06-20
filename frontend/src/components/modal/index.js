@@ -1,6 +1,6 @@
-import CreateNewChannel from './createNewChannel';
-import DeleteChannel from './deleteChannel';
-import RenameChannel from './renameChannel';
+import CreateNewChannel from './CreateNewChannel';
+import DeleteChannel from './DeleteChannel';
+import RenameChannel from './RenameChannel';
 
 const modalMapping = {
   deleteChannel: DeleteChannel,

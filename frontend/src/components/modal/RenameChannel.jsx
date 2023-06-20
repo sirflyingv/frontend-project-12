@@ -24,9 +24,9 @@ const RenameChannel = () => {
     initialValues: { name: '' },
     validationSchema: yup.object({
       name: yup.string()
-        .required('Required')
-        .notOneOf(channelsNames, t('errorChannelNameIsAlreadyUsed'))
-        .max(20, t('errorNewChanelNameMax')),
+        .required('modalRenameChannel.required')
+        .notOneOf(channelsNames, t('modalRenameChannel.errorAlreadyUsed'))
+        .max(20, t('modalRenameChannel.errorMaxLength')),
     }),
     onSubmit: async () => {
       try {
@@ -56,13 +56,15 @@ const RenameChannel = () => {
   return (
     <>
       <div className="modal-header">
-        <div className="modal-title h4">{t('renameChannelHeader')}</div>
+        <div className="modal-title h4">{t('modalRenameChannel.renameChannelHeader')}</div>
         <button onClick={handleCancel} type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" />
       </div>
       <div className="modal-body">
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Form.Label htmlFor="name" className="visually-hidden">{t('renameChannelLabel')}</Form.Label>
+            <Form.Label htmlFor="name" className="visually-hidden">
+              {t('modalRenameChannel.renameChannelLabel')}
+            </Form.Label>
             <Form.Control
               ref={inputRef}
               id="name"
@@ -71,7 +73,7 @@ const RenameChannel = () => {
               value={formik.values.name}
               onBlur={formik.handleBlur}
               required
-              aria-label={t('newChannelName')}
+              aria-label={t('modalRenameChannel.newChannelName')}
               className="mb-2 form-control"
               isInvalid={formik.touched.name && !!formik.errors.name}
             />
@@ -80,8 +82,8 @@ const RenameChannel = () => {
             </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
-            <Button onClick={handleCancel} variant="secondary" className="me-2">{t('cancel')}</Button>
-            <Button type="submit" disabled={isDisabled} variant="primary">{t('rename')}</Button>
+            <Button onClick={handleCancel} variant="secondary" className="me-2">{t('modalRenameChannel.cancel')}</Button>
+            <Button type="submit" disabled={isDisabled} variant="primary">{t('modalRenameChannel.rename')}</Button>
           </div>
         </Form>
       </div>

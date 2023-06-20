@@ -25,9 +25,9 @@ const CreateNewChannel = () => {
     initialValues: { name: '' },
     validationSchema: yup.object({
       name: yup.string()
-        .required('Required')
-        .notOneOf(channelsNames, t('errorChannelNameIsAlreadyUsed'))
-        .max(20, t('errorNewChanelNameMax')),
+        .required(t('modalCreateNewChannel.required'))
+        .notOneOf(channelsNames, t('modalCreateNewChannel.errorAlreadyUsed'))
+        .max(20, t('modalCreateNewChannel.errorMaxLength')),
     }),
     onSubmit: async () => {
       try {
@@ -52,13 +52,13 @@ const CreateNewChannel = () => {
   return (
     <>
       <div className="modal-header">
-        <div className="modal-title h4">{t('addChannel')}</div>
+        <div className="modal-title h4">{t('modalCreateNewChannel.addChannel')}</div>
         <button onClick={handleCancel} type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" />
       </div>
       <div className="modal-body">
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Form.Label className="visually-hidden">{t('channelsName')}</Form.Label>
+            <Form.Label className="visually-hidden">{t('modalCreateNewChannel.channelsName')}</Form.Label>
             <Form.Control
               autoFocus
               name="name"
@@ -66,7 +66,7 @@ const CreateNewChannel = () => {
               value={formik.values.name}
               onBlur={formik.handleBlur}
               required
-              aria-label={t('channelsName')}
+              aria-label={t('modalCreateNewChannel.channelsName')}
               className="mb-2 form-control"
               isInvalid={formik.touched.name && !!formik.errors.name}
             />
@@ -75,8 +75,8 @@ const CreateNewChannel = () => {
             </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
-            <Button onClick={handleCancel} variant="secondary" className="me-2">{t('cancel')}</Button>
-            <Button type="submit" disabled={isDisabled} variant="primary">{t('send')}</Button>
+            <Button onClick={handleCancel} variant="secondary" className="me-2">{t('modalCreateNewChannel.cancel')}</Button>
+            <Button type="submit" disabled={isDisabled} variant="primary">{t('modalCreateNewChannel.send')}</Button>
           </div>
         </Form>
       </div>
