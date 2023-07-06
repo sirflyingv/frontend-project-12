@@ -17,7 +17,10 @@ const DeleteChannel = () => {
   const [isDisabled, setDisabled] = useState(false); // test
 
   const id = useSelector((state) => state.modal.subjectChannel);
-  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+  const subjectChannel = useSelector((state) => state.channels.channels.find((ch) => ch.id === id));
+  const currentChannelId = useSelector(
+    (state) => state.channels.currentChannelId,
+  );
 
   const handleDelete = async (channelId) => {
     try {
@@ -25,7 +28,7 @@ const DeleteChannel = () => {
       await chatAPI.deleteChannel(channelId);
       dispatch(setModal({ opened: false }));
       setDisabled(false);
-      toastDeleteChannel();
+      toastDeleteChannel(subjectChannel.name);
       if (channelId === currentChannelId) dispatch(changeCurrentChannelId(1)); // magic number
     } catch (error) {
       console.log(error);
@@ -41,14 +44,31 @@ const DeleteChannel = () => {
   return (
     <>
       <div className="modal-header">
-        <div className="modal-title h4">{t('modalDeleteChannel.deleteChannel')}</div>
-        <button onClick={handleCancel} type="button" aria-label="Close" data-bs-dismiss="modal" className="btn btn-close" />
+        <div className="modal-title h4">
+          {t('modalDeleteChannel.deleteChannel')}
+        </div>
+        <button
+          onClick={handleCancel}
+          type="button"
+          aria-label="Close"
+          data-bs-dismiss="modal"
+          className="btn btn-close"
+        />
       </div>
       <div className="modal-body">
         <p className="lead">{t('modalDeleteChannel.sure')}</p>
         <div className="d-flex justify-content-end">
-          <Button onClick={handleCancel} variant="secondary" className="me-2">{t('modalDeleteChannel.cancel')}</Button>
-          <Button onClick={() => handleDelete(id)} type="submit" disabled={isDisabled} variant="danger">{t('modalDeleteChannel.delete')}</Button>
+          <Button onClick={handleCancel} variant="secondary" className="me-2">
+            {t('modalDeleteChannel.cancel')}
+          </Button>
+          <Button
+            onClick={() => handleDelete(id)}
+            type="submit"
+            disabled={isDisabled}
+            variant="danger"
+          >
+            {t('modalDeleteChannel.delete')}
+          </Button>
         </div>
       </div>
     </>

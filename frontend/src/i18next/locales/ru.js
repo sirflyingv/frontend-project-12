@@ -46,12 +46,14 @@ export default {
       cancel: 'Отменить',
       send: 'Отправить',
     },
+
     modalDeleteChannel: {
       deleteChannel: 'Удалить канал',
       sure: 'Уверены?',
       cancel: 'Отменить',
       delete: 'Удалить',
     },
+
     modalRenameChannel: {
       renameChannelHeader: 'Переименовать канал',
       renameChannelLabel: 'Имя канала',
@@ -66,12 +68,9 @@ export default {
     toastify: {
       toastNoConnectionToServer: 'Ошибка подключения',
       toastUnspecifiedError: 'Что-то пошло не так',
-      toastChannelCreated: 'Канал создан',
-      // toastChannelCreatedNAMED: 'Канал {{name}} создан',
-      toastChannelRenamed: 'Канал переименован',
-      // toastChannelRenamedNAMED: 'Канал {{oldName}} переименован в {{newName}}',
-      toastChannelDeleted: 'Канал удалён',
-    // toastChannelDeletedNAMED: 'Канал {{name}} удалён',
+      toastChannelCreated: 'Канал {{name}} создан',
+      toastChannelRenamed: 'Канал {{oldName}} переименован в {{newName}}',
+      toastChannelDeleted: 'Канал {{name}} удалён',
     },
 
     activeChannel: {
