@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/sirflyingv/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/sirflyingv/frontend-project-12/actions) [![Maintainability](https://api.codeclimate.com/v1/badges/6a1972b0ef3b330dc7bd/maintainability)](https://codeclimate.com/github/sirflyingv/frontend-project-12/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6a1972b0ef3b330dc7bd/maintainability)](https://codeclimate.com/github/sirflyingv/frontend-project-12/maintainability)
 
 ### Многоканальный чат
 
